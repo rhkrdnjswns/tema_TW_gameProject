@@ -7,15 +7,20 @@ public class Ghost : MonoBehaviour
 {
     //public GameObject pivot;
     
-    tetrisblock tBlock; // 테트리스블록 객체
+    
+    public tetrisblock tBlock; // 테트리스블록 객체
+    public GameObject tblock;
     // Start is called before the first frame update
     void Start()
     {      
-
+        
         var SP = GameObject.FindGameObjectWithTag("Spawner"); // 지역변수 SP에 스포너 할당
-        var cBlock = SP.GetComponent<SpawnerTetris>().currentTetris; // 스포너 안에있는 클래스의 currentTetris필드 할당.
-        tBlock = cBlock.GetComponent<tetrisblock>(); // 현재 생성된 블럭의 클래스 할당
-        foreach(Transform children in transform)
+        //var cBlock = SP.GetComponent<SpawnerTetris>().currentTetris; // 스포너 안에있는 클래스의 currentTetris필드 할당.
+        
+        
+        tBlock = tblock.GetComponent<tetrisblock>(); // 현재 생성된 블럭의 클래스 할당
+        Debug.Log("할당했어");
+        foreach (Transform children in transform)
         {
             int roundX = Mathf.RoundToInt(children.transform.position.x); 
             int roundZ = Mathf.RoundToInt(children.transform.position.z); 
@@ -24,12 +29,20 @@ public class Ghost : MonoBehaviour
                 transform.position += new Vector3(0, 0, -1);
 
             }
+            else if (roundZ <0 )
+            {
+                transform.position += new Vector3(0, 0, 1);
+            }
             else if (roundX >= tetrisblock.X)
             {
                 transform.position += new Vector3(-1, 0, 0);
             }
+            else if (roundX <0 )
+            {
+                transform.position += new Vector3(1, 0, 0);
+            }
         }
-            transform.rotation = cBlock.transform.rotation; //생성된 고스트의 회전값을 현재 생성된 블록의 회전값과 동일하게 해줌.
+            //transform.rotation = cBlock.transform.rotation; //생성된 고스트의 회전값을 현재 생성된 블록의 회전값과 동일하게 해줌.
             //transform.position = cBlock.transform.position;
         
                

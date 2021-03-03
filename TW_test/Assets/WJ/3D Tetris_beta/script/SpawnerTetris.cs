@@ -7,12 +7,15 @@ public class SpawnerTetris : MonoBehaviour
 {
     public GameObject[] Tetris; //생성할 테트리스 블록 담을 게임옵젝 변수
     public GameObject currentTetris; //생성된 블록을 담는 변수
-
+    public float xPos;// 이전에 생성된 블록의 위치 검사 (2개 이상 생성 시 중복 방지)
+    public float zPos;
     public GameObject[] TetrisGhost; //생성할 테트리스 블록의 고스트를 담을 게임옵젝 변수
     public GameObject currentTetrisGhost; //생성된 블록의 고스트를 담는 변수
 
     public int level = 1; //블록 떨어지는 갯수
 
+    [SerializeField]
+    private float[] Angle;
 
     //public float difficulty = 10;
     //int[] posX = new int[2];
@@ -62,28 +65,35 @@ public class SpawnerTetris : MonoBehaviour
                     transform.position = new Vector3(i, transform.position.y, j);
                     currentTetris = Instantiate(Tetris[0], transform.position, Quaternion.identity);
                     currentTetrisGhost = Instantiate(TetrisGhost[0], transform.position, Quaternion.identity);
+                    currentTetrisGhost.GetComponent<Ghost>().tblock = currentTetris;
                 }
             }
         }
     }
     public void NewTetris() //새 블록을 생성하는 함수
     {
-        CreateRandomPos(0, 6);
+        //CreateRandomPos(0, 6);
         
         for (int i = 0; i < level; i++)// 레벨에 따라서 생성되는 블록 갯수가 올라감
             {
 
-               
+                int Rpos = Random.Range(0, 2);
                 int blockNum = Random.Range(0, Tetris.Length); //난수 생성 후 변수에 할당
-                transform.position = new Vector3(PosX[i], transform.position.y, PosZ[i]);//for문 돌때마다 스테이지 내에서 랜덤한 범위로 스포너 위치 이동
-                currentTetris = Instantiate(Tetris[blockNum], transform.position, Quaternion.identity);//게임옵젝 배열의 랜덤한 번째 블록을 생성
-                currentTetrisGhost = Instantiate(TetrisGhost[blockNum], transform.position, Quaternion.identity);//게임옵젝 배열의 랜덤한 번째 고스트 생성
+              //transform.position = new Vector3(PosX[i], transform.position.y, PosZ[i]);//for문 돌때마다 스테이지 내에서 랜덤한 범위로 스포너 위치 이동
+                transform.position = new Vector3(Rpos, transform.position.y, Rpos);
+            
+                currentTetris = Instantiate(Tetris[blockNum], transform.position, Quaternion.Euler(Angle[Random.Range(0, Angle.Length)], Angle[Random.Range(0, Angle.Length)], Angle[Random.Range(0, Angle.Length)]));//게임옵젝 배열의 랜덤한 번째 블록을 생성
+                currentTetrisGhost = Instantiate(TetrisGhost[blockNum], transform.position, currentTetris.transform.rotation) ;//게임옵젝 배열의 랜덤한 번째 고스트 생성
+                
+                currentTetrisGhost.GetComponent<Ghost>().tblock = currentTetris;
+                Debug.Log("넣음");
+            //if (currentTetrisGhost.GetComponent<Ghost>().tBlock == null) continue;
+            xPos = transform.position.x;
+            zPos = transform.position.z;
+        }
 
-     
-            }
-
-        PosX.Clear();
-        PosZ.Clear();
+        //PosX.Clear();
+        //PosZ.Clear();
     }
     /*void SetRandomValue() // 난수가 겹치는 현상 막는 함수
     {

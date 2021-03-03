@@ -7,8 +7,8 @@ public class tetrisblock : MonoBehaviour
 {
     //private float previousTime;
     //public float fallTime = 1.0f;
-    public  static int X = 6;//스테이지 X축 범위
-    public  static int Z = 6; // 스테이지 Z축 범위
+    public  static int X = 2;//스테이지 X축 범위
+    public  static int Z = 2; // 스테이지 Z축 범위
     public static int Y = 14; //스테이지 Y축 범위
 
     public static Transform[,,] grid = new Transform[Z, X, Y]; //스테이지 전체의 위치를 저장할 배열
@@ -26,9 +26,18 @@ public class tetrisblock : MonoBehaviour
                 transform.position += new Vector3(0, 0, -1);
 
             }
+            else if (roundZ < 0)
+            {
+                transform.position += new Vector3(0, 0, 1);
+
+            }
             else if(roundX >= X)
             {
                 transform.position += new Vector3(-1, 0, 0); 
+            }
+            else if (roundX < 0)
+            {
+                transform.position += new Vector3(1, 0, 0);
             }
         }
         //rig.velocity = new Vector3(0, -0.1f, 0);
