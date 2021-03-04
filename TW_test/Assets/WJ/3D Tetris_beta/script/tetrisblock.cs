@@ -111,7 +111,7 @@ public class tetrisblock : MonoBehaviour
             this.enabled = false; //해당 스크립트의 기능 비활성화.
             
             //FindObjectOfType<SpawnerTetris>().NewTetris();
-            
+           
         }
 
     }
