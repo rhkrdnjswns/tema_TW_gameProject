@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public float speed;
+    public float speed;         //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     float hAxis;
     float vAxis;
     Vector3 moveVec;        //움직임
