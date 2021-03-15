@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 8966fc5b1e241b94baf4819c1b33c396
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - block: {fileID: 21300000, guid: 5ff76e620ede39e408159f06574acc48, type: 3}
+  - tile: {fileID: 21300000, guid: 66be734791e816642ace94cd256ca9ba, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
