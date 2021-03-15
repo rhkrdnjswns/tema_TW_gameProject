@@ -7,6 +7,8 @@ public class DPad : MonoBehaviour
     private GameObject player;      //플레이어 스크립트를 가지고있는 오브젝트 player 선언
     private Player playerScript;        //player 아래에 있는 playerScript
 
+    //테스트 하나 둘 셋
+
     public void Init()      //Player 스크립트의 Start() 함수에서 실행
     {
         player = GameObject.FindGameObjectWithTag("Player");        //Player 태그로 플레이어 오브젝트 찾기
