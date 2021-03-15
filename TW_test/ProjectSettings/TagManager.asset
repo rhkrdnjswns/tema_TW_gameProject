@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Stage
   - Spawner
+  - Floor
+  - Block
   layers:
   - Default
   - TransparentFX

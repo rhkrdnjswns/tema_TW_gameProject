@@ -31,7 +31,7 @@ public class block1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        parents = transform.parent.gameObject;
+
         mesh = GetComponent<MeshRenderer>();
         mat = mesh.material;
         transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -59,7 +59,7 @@ public class block1 : MonoBehaviour
         if (get)
         {
             rigid.isKinematic = true;
-            if (cha.getblock == this.parents)
+            if (cha.getblock == this.gameObject)
             {
                 if (xt)
                 {
@@ -74,7 +74,7 @@ public class block1 : MonoBehaviour
                     zr += 90f;
                 }
                 rigid.isKinematic = false;
-                parents.transform.rotation = Quaternion.Euler(xr, yr, zr);//블록 회전
+                this.transform.rotation = Quaternion.Euler(xr, yr, zr);//블록 회전
                 rigid.isKinematic = true;
             }
         }
@@ -85,7 +85,7 @@ public class block1 : MonoBehaviour
         }
     }
     
-    void SetUpFloor()//블록이 끼이는 버그 수정용 앞으로 지울 예정
+   /* void SetUpFloor()//블록이 끼이는 버그 수정용 앞으로 지울 예정
     {
         firstRay = Physics.Raycast(transform.position, -transform.up, frayl, LayerMask.GetMask("Floor"));
         secondRay = Physics.Raycast(transform.position, -transform.up, srayl, LayerMask.GetMask("Floor"));
@@ -97,7 +97,7 @@ public class block1 : MonoBehaviour
         {
             parents.transform.position = new Vector3(parents.transform.position.x, srayl, parents.transform.position.z);
         }
-    }
+    }*/
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -114,6 +114,6 @@ public class block1 : MonoBehaviour
     }
     void FixedUpdate()
     {
-        SetUpFloor();
+        //SetUpFloor();
     }
 }
