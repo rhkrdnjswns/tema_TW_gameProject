@@ -53,6 +53,7 @@ public class Char : MonoBehaviour
     {
         SetInput();//버튼 클릭 받는 함수 호출
         SetJump();//점프 함수 호출
+        CanGrap();
         GetGrap();// 잡기함수 호출
         SetCanPut();// 놓을수 있는지 호출
         SetPut();//놓는 함수 호출
