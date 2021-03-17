@@ -35,7 +35,7 @@ public class block1 : MonoBehaviour
         mesh = GetComponent<MeshRenderer>();
         mat = mesh.material;
         transform.rotation = Quaternion.Euler(0, 0, 0);
-        cha = GameObject.Find("PlayerCon").GetComponent<Char>();
+        cha = GameObject.Find("Player").GetComponent<Char>();
         matColor = mat.color;
     }
     void Awake()
@@ -97,7 +97,7 @@ public class block1 : MonoBehaviour
         {
             parents.transform.position = new Vector3(parents.transform.position.x, srayl, parents.transform.position.z);
         }
-    }*/
+    }
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -115,5 +115,5 @@ public class block1 : MonoBehaviour
     void FixedUpdate()
     {
         //SetUpFloor();
-    }
+    }*/
 }

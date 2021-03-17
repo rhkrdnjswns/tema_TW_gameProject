@@ -196,9 +196,9 @@ public class Char : MonoBehaviour
         {
             jump_count = 2;
         }
-        if (collision.gameObject.tag == "Block")//충돌한 블록값 저장
+        if (collision.transform.parent.GetComponentInParent<block1>().tag == "Block")//충돌한 블록값 저장
         {
-            grabObject = collision.gameObject;
+            grabObject = collision.transform.parent.GetComponentInParent<block1>().gameObject;
             if (underB == collision.gameObject)//주인공이 떨어진 블록위에 있을때 점프 초기화
             {
                 jump_count = 2;
