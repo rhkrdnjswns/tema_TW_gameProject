@@ -36,7 +36,7 @@ public class Char : MonoBehaviour
     public RaycastHit rayHitdown, rayHitforward;//
     PutPos putpos;//class putpos 받는거
     block1 block;//class block
-    tetrisblock tetrisblock;//class tetrisblock
+    Block tetrisblock;//class tetrisblock
     Vector3 move;// 이동
     Rigidbody rigid;// 
     // Start is called before the first frame update
@@ -62,10 +62,10 @@ public class Char : MonoBehaviour
     }
     void SetMove()
     {   // 스테이지 밖으로 못나가게 하는 제어문
-        if (this.transform.position.x < tetrisblock.X || this.transform.position.x > tetrisblock.X || this.transform.position.z < tetrisblock.Z || this.transform.position.z > tetrisblock.Z)
-        {
-            move = Vector3.zero;
-        }
+       // if (this.transform.position.x < Block.stageX || this.transform.position.x > Block.X || this.transform.position.z < tetrisblock.Z || this.transform.position.z > tetrisblock.Z)
+       // {
+          //  move = Vector3.zero;
+        //}
         move = new Vector3(player_horizontal, 0, player_vectical).normalized;//이동
         transform.position += move * speed * Time.deltaTime;
         transform.LookAt(transform.position + move);
