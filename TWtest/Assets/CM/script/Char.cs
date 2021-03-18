@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class Char : MonoBehaviour
 {
+   
     int a, b, c, d; //그냥변수
     int jump_count = 2; //점프가능횟수
     public int handindex; //블록종류
@@ -32,6 +33,7 @@ public class Char : MonoBehaviour
     public GameObject keepBlock = null;//킵한 블록의 오브젝트
     public GameObject keepT = null;// 킵한블록의 오브젝트를 저장하는 변수
     GameObject underB,forwardB;// 캐릭터 바닥에,앞에 블록이 있는지
+    GameObject blockParents;
     public Transform trans;//캐릭터의 transform
     public RaycastHit rayHitdown, rayHitforward;//
     PutPos putpos;//class putpos 받는거
@@ -92,7 +94,7 @@ public class Char : MonoBehaviour
     }
     int GetGrap()// 블록을 잡는 함수
     {
-        if (grap && grabObject != null && !handBlock && jump_count == 2&&cangrap)// 좌클릭, 충돌한 물체가 있는지, 손에블록이 없는지
+        if (grap && grabObject != null && !handBlock && jump_count == 2/*&&cangrap*/)// 좌클릭, 충돌한 물체가 있는지, 손에블록이 없는지
         {
             if (grabObject.tag == "Block")
             {
@@ -196,19 +198,25 @@ public class Char : MonoBehaviour
         {
             jump_count = 2;
         }
-        if (collision.transform.parent.GetComponentInParent<block1>().tag == "Block")//충돌한 블록값 저장
+        if (collision.transform.parent.gameObject != null)
         {
-            grabObject = collision.transform.parent.GetComponentInParent<block1>().gameObject;
-            if (underB == collision.gameObject)//주인공이 떨어진 블록위에 있을때 점프 초기화
+            blockParents = collision.transform.parent.gameObject;
+            Debug.Log("a");
+            if (blockParents.tag == "Block")//충돌한 블록값 저장
             {
-                jump_count = 2;
+                Debug.Log("b");
+                grabObject = blockParents;
+                if (underB == collision.gameObject)//주인공이 떨어진 블록위에 있을때 점프 초기화
+                {
+                    jump_count = 2;
+                }
             }
         }
     }
     void OnCollisionExit(Collision collision)// 충돌채크 블록
     {
-        if (collision.gameObject.tag == "Block")
-        {
+        if (blockParents.tag=="Block") {
+            blockParents = null;
             grabObject = null;
         }
     }
