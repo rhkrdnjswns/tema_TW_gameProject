@@ -59,7 +59,7 @@ public class block1 : MonoBehaviour
         get = cha.handBlock;
         if (get)
         {
-           // rigid.isKinematic = true;
+            rigid.isKinematic = true;
             if (cha.getblock == this.gameObject)
             {
                 if (xt)
@@ -75,9 +75,9 @@ public class block1 : MonoBehaviour
                 {
                     zr += 90f;
                 }
-              //  rigid.isKinematic = false;
+                rigid.isKinematic = false;
                 this.transform.rotation = Quaternion.Euler(xr, yr, zr);//블록 회전
-               // rigid.isKinematic = true;
+                rigid.isKinematic = true;
             }
         }
         if (!get)

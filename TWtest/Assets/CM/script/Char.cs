@@ -39,6 +39,7 @@ public class Char : MonoBehaviour
     PutPos putpos;//class putpos 받는거
     block1 block;//class block
     Block tetrisblock;//class tetrisblock
+    Ghost1 ghost; 
     Vector3 move;// 이동
     Rigidbody rigid;// 
     // Start is called before the first frame update
@@ -100,7 +101,7 @@ public class Char : MonoBehaviour
             {
                 /* blockS=block.parents.transform.localScale;
                  blockS /= 0.5f;
- ;               ghostblock.transform.localScale =new Vector3(blockS.x, blockS.y, blockS.z);   */
+ ;               ghostblock.transform.localScale =new Vector3(blockS.x, blockS.y, blockS.z);*/
                 ghostblock.SetActive(true);
                 canup = false;
                 block = grabObject.GetComponent<block1>();
@@ -109,7 +110,13 @@ public class Char : MonoBehaviour
                 handBlock = true;
                 put = false;
                 getblock = blocks[handindex];
-                Destroy(grabObject);//잡은블록 제거
+                /*  for (int i = 0; i < grabObject.transform.childCount; i++)
+                  {
+                  if (grabObject.gameObject.transform.childCount>i) { 
+                      Destroy(transform.GetChild(i).gameObject);
+                  }
+              }*/
+                Destroy(grabObject);
                 if (handindex == 0) { blocks[0].SetActive(true); }
                 if (handindex == 1) { blocks[1].SetActive(true); }
                 if (handindex == 2) { blocks[2].SetActive(true); }
@@ -122,7 +129,8 @@ public class Char : MonoBehaviour
         if (put && handBlock && jump_count == 2 /*&& canput*/)//우클릭, 블록이 있는지, 블록놓을수있는지
         {
             Instantiate(blocks[handindex],
-            new Vector3(spotx, spoty, spotz),//
+            //new Vector3(spotx, putpos.pos.y, spotz),
+            ghost.ghostb.transform.position,
             blocks[handindex].transform.rotation);
             handBlock = false;
             put = false;
@@ -198,9 +206,9 @@ public class Char : MonoBehaviour
         {
             jump_count = 2;
         }
-        if (collision.transform.parent.gameObject != null)
+        /*if (collision.gameObject.transform.parent.gameObject != null)
         {
-            blockParents = collision.transform.parent.gameObject;
+            blockParents = collision.gameObject.transform.parent.gameObject;
             Debug.Log("a");
             if (blockParents.tag == "Block")//충돌한 블록값 저장
             {
@@ -211,15 +219,33 @@ public class Char : MonoBehaviour
                     jump_count = 2;
                 }
             }
+        }*/
+    }
+     void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Block")
+        {
+            if (other.gameObject != null)
+            {
+                grabObject = other.transform.parent.gameObject;
+            }
+        }
+       
+    }
+   void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Block")
+        {
+            grabObject = null; 
         }
     }
-    void OnCollisionExit(Collision collision)// 충돌채크 블록
+   /* void OnCollisionExit(Collision collision)// 충돌채크 블록
     {
-        if (blockParents.tag=="Block") {
+    if (blockParents.tag=="Block") {
             blockParents = null;
             grabObject = null;
         }
-    }
+    }*/
     void SetFreezeRotation()//주인공이 강제로 회전하는걸 막는 메서드 
     {
         rigid.angularVelocity = Vector3.zero;
