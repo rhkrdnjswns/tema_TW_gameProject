@@ -39,12 +39,13 @@ public class Char : MonoBehaviour
     PutPos putpos;//class putpos 받는거
     block1 block;//class block
     Block tetrisblock;//class tetrisblock
-    Ghost1 ghost; 
+    
     Vector3 move;// 이동
     Rigidbody rigid;// 
     // Start is called before the first frame update
     void Start()
     {
+        
         block = GameObject.Find("Cube").GetComponent<block1>();
         trans = GetComponent<Transform>();
         rigid = GetComponent<Rigidbody>();
@@ -120,18 +121,19 @@ public class Char : MonoBehaviour
                 if (handindex == 0) { blocks[0].SetActive(true); }
                 if (handindex == 1) { blocks[1].SetActive(true); }
                 if (handindex == 2) { blocks[2].SetActive(true); }
-            }
+
+            }           
         }
         return handindex;// put할때 블록 종류 기억
     }
     void SetPut()//블록을 놓는함수
     {
-        if (put && handBlock && jump_count == 2 /*&& canput*/)//우클릭, 블록이 있는지, 블록놓을수있는지
+        if (put && handBlock && jump_count == 2 && blocks[handindex]/*&& canput*/)//우클릭, 블록이 있는지, 블록놓을수있는지
         {
-            Instantiate(blocks[handindex],
-            //new Vector3(spotx, putpos.pos.y, spotz),
-            ghost.ghostb.transform.position,
-            blocks[handindex].transform.rotation);
+              Instantiate(blocks[handindex],
+                //blocks[handindex],
+            new Vector3(spotx, this.transform.position.y, spotz),
+            blocks[handindex].transform.rotation=Quaternion.Euler(block.xr, block.yr, block.zr));
             handBlock = false;
             put = false;
             canup = true;
@@ -187,6 +189,7 @@ public class Char : MonoBehaviour
             getblock = blocks[handindex];//손에있는 블록값 저장
             hasblocks[handindex] = true;//index번째 블록 있음
             keepBlock.SetActive(true);//킵한블록 활성화
+            ghostblock.SetActive(false);//블록이 놓일위치 비활성화
             keepBlock = null;//킵블록 null
             keep = false;//킵기능 활성화
         }

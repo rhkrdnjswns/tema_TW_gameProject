@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Video;
-
+using Debug = UnityEngine.Debug;
 public class block1 : MonoBehaviour
 {
     MeshRenderer mesh;
@@ -18,21 +18,23 @@ public class block1 : MonoBehaviour
     bool get;
     bool xt;
     bool yt;
-    bool zt;
-    bool firstRay;
-    bool secondRay;
-    float xr = 0f;
-    float yr = 0f;
-    float zr = 0f;
-   float frayl = 2f;
-    float srayl = 2f;
-    GameObject myObject;
- GameObject parents;
+     bool zt;
+    //bool firstRay;
+   // bool secondRay;
+    public float xr = 0f;
+    public float yr = 0f;
+    public float zr = 0f;
+    //float frayl = 2f;
+    //float srayl = 2f;
+    Vector3 blockdirec;//블록의 방향
+    GameObject mydirec;
+    GameObject parents;
     Rigidbody rigid;
+    Collider collider;
     // Start is called before the first frame update
     void Start()
     {
-
+        collider = GetComponent<BoxCollider>();
         mesh = GetComponent<MeshRenderer>();
         mat = mesh.material;
         transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -60,23 +62,26 @@ public class block1 : MonoBehaviour
         if (get)
         {
             rigid.isKinematic = true;
-            if (cha.getblock == this.gameObject)
+            if (cha.getblock == this.transform.parent.gameObject)
             {
+                collider.isTrigger = true;
                 if (xt)
                 {
-                    
+                    Debug.Log("1");
                     xr += 90f;
                 }
                 if (yt)
                 {
                     yr += 90f;
+                    Debug.Log("2");
                 }
                 if (zt)
                 {
                     zr += 90f;
+                    Debug.Log("3");
                 }
                 rigid.isKinematic = false;
-                this.transform.rotation = Quaternion.Euler(xr, yr, zr);//블록 회전
+             this.transform.rotation = Quaternion.Euler(xr, yr, zr);//블록 회전
                 rigid.isKinematic = true;
             }
         }
