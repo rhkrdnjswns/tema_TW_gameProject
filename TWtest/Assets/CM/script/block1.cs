@@ -27,17 +27,18 @@ public class block1 : MonoBehaviour
     //float frayl = 2f;
     //float srayl = 2f;
     Vector3 blockdirec;//블록의 방향
-    GameObject mydirec;
+   public GameObject mydirec;
     GameObject parents;
     Rigidbody rigid;
     Collider collider;
     // Start is called before the first frame update
     void Start()
     {
+        this.transform.rotation = Quaternion.Euler(0, 0, 0);
+        mydirec = this.gameObject;
         collider = GetComponent<BoxCollider>();
         mesh = GetComponent<MeshRenderer>();
         mat = mesh.material;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
         cha = GameObject.Find("Player").GetComponent<Char>();
         matColor = mat.color;
     }
@@ -48,7 +49,9 @@ public class block1 : MonoBehaviour
     void Update()
     {
         SetFirst();
+       
         SetRotat();
+       
     }
     void SetFirst()
     {
@@ -58,40 +61,46 @@ public class block1 : MonoBehaviour
     }
     void SetRotat()
     {
+        
+        //xr = transform.rotation.x;
+        //yr = transform.rotation.y;
+        //zr = transform.rotation.z;
         get = cha.handBlock;
         if (get)
         {
-            rigid.isKinematic = true;
             if (cha.getblock == this.transform.parent.gameObject)
             {
-                collider.isTrigger = true;
                 if (xt)
                 {
                     Debug.Log("1");
                     xr += 90f;
+                    
                 }
                 if (yt)
                 {
                     yr += 90f;
                     Debug.Log("2");
+                    
                 }
                 if (zt)
                 {
                     zr += 90f;
                     Debug.Log("3");
-                }
-                rigid.isKinematic = false;
-             this.transform.rotation = Quaternion.Euler(xr, yr, zr);//블록 회전
-                rigid.isKinematic = true;
+                } 
+                this.transform.parent.rotation = Quaternion.Euler(xr, yr, zr);
             }
         }
         if (!get)
         {
             matColor.a = 1f;
-            this.mat.color = matColor;
+            this.mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, 1.0f); ;
+         
         }
     }
-    
+    public void BlockRo()
+    {
+       
+    }
    /* void SetUpFloor()//블록이 끼이는 버그 수정용 앞으로 지울 예정
     {
         firstRay = Physics.Raycast(transform.position, -transform.up, frayl, LayerMask.GetMask("Floor"));

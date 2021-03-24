@@ -83,6 +83,10 @@ MonoBehaviour:
   blocktype: 0
   value: 0
   up: 0
+  xr: 0
+  yr: 0
+  zr: 0
+  mydirec: {fileID: 0}
 --- !u!1 &2412184618948399696
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +98,7 @@ GameObject:
   - component: {fileID: 2412184618948399699}
   m_Layer: 0
   m_Name: 1
-  m_TagString: Untagged
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
