@@ -11,11 +11,13 @@ public class BlockSpawner : MonoBehaviour
     private GameObject[] GhostBlocks;
     private GameObject currentGhostBlock;
 
+    private Transform transform;
     private Vector3 PreviousPos = Vector3.zero;
     public GameObject getCurrentBlock()
     {
         return currentBlock;
     }
+    private void Awake() => transform = GetComponent<Transform>();
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -50,9 +52,11 @@ public class BlockSpawner : MonoBehaviour
                     int _RandomPosX = Random.Range(0, Grid.stageX);
                     int _RandomPosZ = Random.Range(0, Grid.stageZ);
                     transform.position = new Vector3(_RandomPosX, transform.position.y, _RandomPosZ);
-                } 
-        currentBlock = Instantiate(Blocks[blockNum], transform.position, Quaternion.identity);
-        currentGhostBlock = Instantiate(GhostBlocks[blockNum], transform.position, currentBlock.transform.rotation);
+                }
+        currentBlock = ObjectPool.GetBlock(blockNum,transform).gameObject;//Instantiate(Blocks[blockNum], transform.position, Quaternion.identity);
+        currentGhostBlock = ObjectPool.GetGhost(blockNum).gameObject;//Instantiate(GhostBlocks[blockNum], transform.position, currentBlock.transform.rotation);
+        currentGhostBlock.transform.position = currentBlock.transform.position;
+        currentGhostBlock.transform.rotation = currentBlock.transform.rotation;
         currentGhostBlock.GetComponent<Ghost>().setCurrnetBlockForGhost(currentBlock);
 
         PreviousPos = transform.position;
