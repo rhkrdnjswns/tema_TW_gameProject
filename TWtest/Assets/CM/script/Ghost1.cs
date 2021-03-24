@@ -10,7 +10,7 @@ public class Ghost1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cha = GameObject.Find("PlayerCon").GetComponent<Char>();
+        cha = GameObject.Find("Player").GetComponent<Char>();
         putpos = GameObject.Find("PutPos").GetComponent<PutPos>();
     }
     void Update()

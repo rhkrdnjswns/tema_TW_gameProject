@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class Char : MonoBehaviour
 {
+   
     int a, b, c, d; //그냥변수
     int jump_count = 2; //점프가능횟수
     public int handindex; //블록종류
@@ -22,26 +23,30 @@ public class Char : MonoBehaviour
     bool keep;//잡았는지
     bool canput = true;//블록놓을수있는지
     bool cangrap;
-    public bool canup = false;//블록이 낑기는 현상 수정용 삭제될 변수
+    
     public bool handBlock = false;//손에 블록이 있는지 확인
     public bool[] hasblocks;//블록활성화
     public GameObject[] blocks;//블록의 종류
     public GameObject getblock;//손에 있는 블록정보 저장용 변수
     public GameObject ghostblock;//블록이 놓일 위치를 나타내는 오브젝트
     public GameObject grabObject;// 충돌한 블록을 받는것
+    public GameObject fObject;
     public GameObject keepBlock = null;//킵한 블록의 오브젝트
     public GameObject keepT = null;// 킵한블록의 오브젝트를 저장하는 변수
     GameObject underB,forwardB;// 캐릭터 바닥에,앞에 블록이 있는지
+    GameObject blockParents;
     public Transform trans;//캐릭터의 transform
     public RaycastHit rayHitdown, rayHitforward;//
     PutPos putpos;//class putpos 받는거
     block1 block;//class block
     Block tetrisblock;//class tetrisblock
+    
     Vector3 move;// 이동
     Rigidbody rigid;// 
     // Start is called before the first frame update
     void Start()
     {
+        
         block = GameObject.Find("Cube").GetComponent<block1>();
         trans = GetComponent<Transform>();
         rigid = GetComponent<Rigidbody>();
@@ -53,7 +58,7 @@ public class Char : MonoBehaviour
     {
         SetInput();//버튼 클릭 받는 함수 호출
         SetJump();//점프 함수 호출
-        CanGrap();
+        //CanGrap();
         GetGrap();// 잡기함수 호출
         SetCanPut();// 놓을수 있는지 호출
         SetPut();//놓는 함수 호출
@@ -92,26 +97,30 @@ public class Char : MonoBehaviour
     }
     int GetGrap()// 블록을 잡는 함수
     {
-        if (grap && grabObject != null && !handBlock && jump_count == 2&&cangrap)// 좌클릭, 충돌한 물체가 있는지, 손에블록이 없는지
+        grabObject=putpos.forwardObject;
+        if (grap && grabObject != null && !handBlock && jump_count == 2/*&&cangrap*/)// 좌클릭, 충돌한 물체가 있는지, 손에블록이 없는지
         {
             if (grabObject.tag == "Block")
             {
                 /* blockS=block.parents.transform.localScale;
                  blockS /= 0.5f;
- ;               ghostblock.transform.localScale =new Vector3(blockS.x, blockS.y, blockS.z);   */
+ ;               ghostblock.transform.localScale =new Vector3(blockS.x, blockS.y, blockS.z);*/
                 ghostblock.SetActive(true);
-                canup = false;
-                block = grabObject.GetComponent<block1>();
+               
+                block = grabObject.transform.GetComponentInChildren<block1>();
                 handindex = block.value;// value 블록의 종류
                 hasblocks[handindex] = true;//
                 handBlock = true;
                 put = false;
                 getblock = blocks[handindex];
-                Destroy(grabObject);//잡은블록 제거
-                if (handindex == 0) { blocks[0].SetActive(true); }
-                if (handindex == 1) { blocks[1].SetActive(true); }
-                if (handindex == 2) { blocks[2].SetActive(true); }
+                for (int i = 0; i < blocks.Length; i++) {
+                    if (i == handindex) {
+                        blocks[i].SetActive(true);
+                        
             }
+                }
+                Destroy(grabObject);
+            }           
         }
         return handindex;// put할때 블록 종류 기억
     }
@@ -119,12 +128,15 @@ public class Char : MonoBehaviour
     {
         if (put && handBlock && jump_count == 2 /*&& canput*/)//우클릭, 블록이 있는지, 블록놓을수있는지
         {
-            Instantiate(blocks[handindex],
-            new Vector3(spotx, spoty, spotz),//
+            block = blocks[handindex].transform.GetComponentInChildren<block1>();
+            GameObject instantblock = Instantiate(blocks[handindex],
+            new Vector3(spotx, this.transform.position.y, spotz),
             blocks[handindex].transform.rotation);
+           // GameObject childblock = instantblock.transform.GetChild(0).gameObject;
+            //childblock.transform.rotation = Quaternion.Euler(0, 0, 0);
             handBlock = false;
             put = false;
-            canup = true;
+            
             getblock = null;
             hasblocks[handindex] = false;
             blocks[handindex].SetActive(false);
@@ -177,41 +189,81 @@ public class Char : MonoBehaviour
             getblock = blocks[handindex];//손에있는 블록값 저장
             hasblocks[handindex] = true;//index번째 블록 있음
             keepBlock.SetActive(true);//킵한블록 활성화
+            ghostblock.SetActive(false);//블록이 놓일위치 비활성화
             keepBlock = null;//킵블록 null
             keep = false;//킵기능 활성화
         }
     }
-  void CanGrap()//앞에있는 블록만 집을수 있게
-    {
-        if(Physics.Raycast(transform.position,transform.forward,out rayHitforward,5))
-        {
-            forwardB = rayHitforward.collider.gameObject;
-            if (grabObject == forwardB) { cangrap= true; }
-        }
-        cangrap= false;
-    }
+    /* void CanGrap()//앞에있는 블록만 집을수 있게
+       {
+           if(Physics.Raycast(transform.position,transform.forward,out rayHitforward,5))
+           {
+               forwardB = rayHitforward.collider.gameObject;
+               if (grabObject == forwardB) { cangrap= true; }
+           }
+           cangrap= false;
+       }
+       void OnCollisionEnter(Collision collision)//충돌 채크 점프,블록
+       {
+           if (collision.gameObject.tag == "Floor")//점프 횟수 초기화
+           {
+               jump_count = 2;
+           }
+           /*if (collision.gameObject.transform.parent.gameObject != null)
+           {
+               blockParents = collision.gameObject.transform.parent.gameObject;
+               Debug.Log("a");
+               if (blockParents.tag == "Block")//충돌한 블록값 저장
+               {
+                   Debug.Log("b");
+                   grabObject = blockParents;
+                   if (underB == collision.gameObject)//주인공이 떨어진 블록위에 있을때 점프 초기화
+                   {
+                       jump_count = 2;
+                   }
+               }
+           }
+       }
+        void OnTriggerEnter(Collider other)
+       {
+           if (other.tag == "Block")
+           {
+               if (other.gameObject != null)
+               {
+                   grabObject = other.transform.parent.gameObject;
+               }
+           }
+
+       }
+      void OnTriggerExit(Collider other)
+       {
+           if(other.tag == "Block")
+           {
+               grabObject = null; 
+           }
+       }
+       void OnCollisionExit(Collision collision)// 충돌채크 블록
+       {
+       if (blockParents.tag=="Block") {
+               blockParents = null;
+               grabObject = null;
+           }
+       }*/
     void OnCollisionEnter(Collision collision)//충돌 채크 점프,블록
     {
         if (collision.gameObject.tag == "Floor")//점프 횟수 초기화
         {
             jump_count = 2;
         }
-        if (collision.transform.parent.GetComponentInParent<block1>().tag == "Block")//충돌한 블록값 저장
-        {
-            grabObject = collision.transform.parent.GetComponentInParent<block1>().gameObject;
-            if (underB == collision.gameObject)//주인공이 떨어진 블록위에 있을때 점프 초기화
-            {
-                jump_count = 2;
-            }
+       
+           
+                if (underB == collision.gameObject)//주인공이 떨어진 블록위에 있을때 점프 초기화
+                {
+                    jump_count = 2;
+                }
+            
         }
-    }
-    void OnCollisionExit(Collision collision)// 충돌채크 블록
-    {
-        if (collision.gameObject.tag == "Block")
-        {
-            grabObject = null;
-        }
-    }
+    
     void SetFreezeRotation()//주인공이 강제로 회전하는걸 막는 메서드 
     {
         rigid.angularVelocity = Vector3.zero;
