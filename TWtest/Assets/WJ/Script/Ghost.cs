@@ -38,7 +38,36 @@ public class Ghost : MonoBehaviour
             }
         }
     }
-
+    public Vector3 CheckGhostTransform(Transform transform)
+    {
+        Transform originTr = transform;
+        float y = originTr.position.y;
+        Vector3 results = new Vector3(0, 0, 0);
+        foreach (Transform children in transform)
+        {
+            int roundX = Mathf.RoundToInt(children.transform.position.x);
+            int roundZ = Mathf.RoundToInt(children.transform.position.z);
+            if (roundX > Grid.stageX)
+            {
+                results = new Vector3(-1, 0, 0);
+            }
+            else if (roundX < 0)
+            {
+                results = new Vector3(1, 0, 0);
+            }
+            else if (roundZ > Grid.stageZ)
+            {
+                results = new Vector3(0, 0, -1);
+            }
+            else if (roundZ < 0)
+            {
+                results = new Vector3(0, 0, 1);
+            }
+            results.y = y;
+            originTr.position += results;
+        }
+        return originTr.position;
+    }
     // Update is called once per frame
     void Update()
     {
