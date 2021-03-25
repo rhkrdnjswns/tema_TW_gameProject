@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public static int stageX = 3;
-    public static int stageZ = 3;
+    public static int stageX = 6;
+    public static int stageZ = 6;
     public static int stageY = 14;
     public static Transform[,,] grid = new Transform[stageX, stageZ, stageY];
 
@@ -72,7 +72,7 @@ public class Grid : MonoBehaviour
         {
             for (int x = 0; x < stageX; x++)
             {
-                DestroyBlock(grid[z, x, i].parent.GetComponent<Block>());//Destroy(grid[z, x, i].gameObject);    
+                Destroy(grid[z, x, i].gameObject);    
                 grid[z, x, i] = null;
             }
         }
@@ -93,10 +93,6 @@ public class Grid : MonoBehaviour
                 }
             }
         }
-    }
-    private void DestroyBlock(Block block)
-    {
-        ObjectPool.ReturnObject(block);
     }
    
 }
