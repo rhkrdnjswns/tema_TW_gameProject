@@ -19,6 +19,7 @@ public class PutPos : MonoBehaviour
             if (other.gameObject != null)
             {
                 forwardObject = other.transform.parent.gameObject;
+                Debug.Log(forwardObject);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -8,11 +9,11 @@ using UnityEngine.UIElements;
 
 public class Char : MonoBehaviour
 {
-   
     int a, b, c, d; //그냥변수
-    int jump_count = 2; //점프가능횟수
+    int jump_count = 1; //점프가능횟수
     public int handindex; //블록종류
     public int handindext;//블록종류 저장
+    public int ghostindex;
     public int spotx, spoty, spotz; //블록이 놓일 위치
     float speed = 10;//속도
     float player_horizontal;//x이동
@@ -21,15 +22,16 @@ public class Char : MonoBehaviour
     bool grap;//블록 잡을 때 확인
     bool put;//블록놓을 때 확인
     bool keep;//잡았는지
-    bool canput = true;//블록놓을수있는지
-    bool cangrap;
-    
+    //bool canput = true;//블록놓을수있는지
+   // bool cangrap;
     public bool handBlock = false;//손에 블록이 있는지 확인
     public bool[] hasblocks;//블록활성화
     public GameObject[] blocks;//블록의 종류
     public GameObject getblock;//손에 있는 블록정보 저장용 변수
     public GameObject ghostblock;//블록이 놓일 위치를 나타내는 오브젝트
+    
     public GameObject grabObject;// 충돌한 블록을 받는것
+    GameObject blockChild;//
     public GameObject fObject;
     public GameObject keepBlock = null;//킵한 블록의 오브젝트
     public GameObject keepT = null;// 킵한블록의 오브젝트를 저장하는 변수
@@ -40,14 +42,14 @@ public class Char : MonoBehaviour
     PutPos putpos;//class putpos 받는거
     block1 block;//class block
     Block tetrisblock;//class tetrisblock
-    
+   
     Vector3 move;// 이동
     Rigidbody rigid;// 
     // Start is called before the first frame update
     void Start()
     {
         
-        block = GameObject.Find("Cube").GetComponent<block1>();
+       // block = GameObject.Find("Cube").GetComponent<block1>();
         trans = GetComponent<Transform>();
         rigid = GetComponent<Rigidbody>();
         putpos = GameObject.Find("PutPos").GetComponent<PutPos>();
@@ -67,13 +69,15 @@ public class Char : MonoBehaviour
     }
     void SetMove()
     {   // 스테이지 밖으로 못나가게 하는 제어문
-       // if (this.transform.position.x < Block.stageX || this.transform.position.x > Block.X || this.transform.position.z < tetrisblock.Z || this.transform.position.z > tetrisblock.Z)
-       // {
-          //  move = Vector3.zero;
-        //}
+        
         move = new Vector3(player_horizontal, 0, player_vectical).normalized;//이동
         transform.position += move * speed * Time.deltaTime;
         transform.LookAt(transform.position + move);
+        if (this.transform.position.x < 0 || this.transform.position.x > Grid.stageX || this.transform.position.z < 0 || this.transform.position.z > Grid.stageZ)
+        {
+            Debug.Log("s");
+            move = Vector3.zero;
+        }
     }
     void SetInput()
     {
@@ -90,7 +94,7 @@ public class Char : MonoBehaviour
         {
             if (jump)
             {
-                rigid.AddForce(Vector3.up * 10, ForceMode.Impulse);
+                rigid.AddForce(Vector3.up * 7, ForceMode.VelocityChange);
                 jump_count--;
             }
         }
@@ -98,37 +102,30 @@ public class Char : MonoBehaviour
     int GetGrap()// 블록을 잡는 함수
     {
         grabObject=putpos.forwardObject;
-        if (grap && grabObject != null && !handBlock && jump_count == 2/*&&cangrap*/)// 좌클릭, 충돌한 물체가 있는지, 손에블록이 없는지
+        if (grap && putpos.forwardObject != null && !handBlock && jump_count == 1/*&&cangrap*/)// 좌클릭, 충돌한 물체가 있는지, 손에블록이 없는지
         {
-            if (grabObject.tag == "Block")
+            if (putpos.forwardObject.tag == "Block")
             {
-                /* blockS=block.parents.transform.localScale;
-                 blockS /= 0.5f;
- ;               ghostblock.transform.localScale =new Vector3(blockS.x, blockS.y, blockS.z);*/
-                ghostblock.SetActive(true);
-               
-                block = grabObject.transform.GetComponentInChildren<block1>();
-                handindex = block.value;// value 블록의 종류
-                hasblocks[handindex] = true;//
+                Debug.Log("g");
+              //  ghostblock.SetActive(true);
+                //block = grabObject.transform.GetComponent<block1>();
+               // handindex = block.value;// value 블록의 종류
+               // hasblocks[handindex] = true;//
                 handBlock = true;
                 put = false;
-                getblock = blocks[handindex];
-                for (int i = 0; i < blocks.Length; i++) {
-                    if (i == handindex) {
-                        blocks[i].SetActive(true);
-                        
-            }
-                }
-                Destroy(grabObject);
+             //   getblock = blocks[handindex];
+                tetrisblock = grabObject.transform.GetComponentInChildren<Block>();
+                //  grabObject.transform.position =new Vector3(transform.position.x,transform.position.y+2,transform.position.z ) ;
+                grabObject.SetActive(false);
             }           
         }
         return handindex;// put할때 블록 종류 기억
     }
     void SetPut()//블록을 놓는함수
     {
-        if (put && handBlock && jump_count == 2 /*&& canput*/)//우클릭, 블록이 있는지, 블록놓을수있는지
+        if (put && handBlock && jump_count == 1 /*&& canput*/)//우클릭, 블록이 있는지, 블록놓을수있는지
         {
-            block = blocks[handindex].transform.GetComponentInChildren<block1>();
+            block = blocks[handindex].transform.GetComponent<block1>();
             GameObject instantblock = Instantiate(blocks[handindex],
             new Vector3(spotx, this.transform.position.y, spotz),
             blocks[handindex].transform.rotation);
@@ -249,20 +246,18 @@ public class Char : MonoBehaviour
                grabObject = null;
            }
        }*/
-    void OnCollisionEnter(Collision collision)//충돌 채크 점프,블록
+   /* void OnCollisionEnter(Collision collision)//충돌 채크 점프,블록
     {
         if (collision.gameObject.tag == "Floor")//점프 횟수 초기화
         {
+            Debug.Log("j");
             jump_count = 2;
         }
-       
-           
                 if (underB == collision.gameObject)//주인공이 떨어진 블록위에 있을때 점프 초기화
                 {
                     jump_count = 2;
                 }
-            
-        }
+    }*/
     
     void SetFreezeRotation()//주인공이 강제로 회전하는걸 막는 메서드 
     {
@@ -270,13 +265,16 @@ public class Char : MonoBehaviour
     }
     void FixedUpdate()
     {
+       
         SetFreezeRotation();
         Ray rayd = new Ray();
         rayd.origin = trans.position;
         rayd.direction = -trans.up;
-        if (Physics.Raycast(rayd, out rayHitdown) && rayHitdown.collider.tag == "Block")
+        if (Physics.Raycast(rayd, out rayHitdown,1.5f)&&jump_count!=1)// && rayHitdown.collider.tag == "Block")
         {
-            underB = rayHitdown.collider.gameObject;
+            Debug.Log("j");
+            //  underB = rayHitdown.collider.gameObject;
+            jump_count = 1;
         }
     }
 }

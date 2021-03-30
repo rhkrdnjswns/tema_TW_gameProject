@@ -7,11 +7,12 @@ using UnityEngine.Video;
 using Debug = UnityEngine.Debug;
 public class block1 : MonoBehaviour
 {
-    MeshRenderer mesh;
-    Material mat;
-    Color matColor;
+   // MeshRenderer mesh;
+   // Material mat;
+  //  Color matColor;
     Char cha;
-    public enum Blocktype { fb, sb, tb };
+    PutPos putpos;
+    public enum Blocktype { Ib,mIb,Ob,Rb };
     public Blocktype blocktype;
     public int value;
     public bool up;//블록이 바닥에 닿았는지
@@ -37,10 +38,10 @@ public class block1 : MonoBehaviour
         this.transform.rotation = Quaternion.Euler(0, 0, 0);
         mydirec = this.gameObject;
         collider = GetComponent<BoxCollider>();
-        mesh = GetComponent<MeshRenderer>();
-        mat = mesh.material;
+       // mesh = GetComponent<MeshRenderer>();
+       // mat = mesh.material;
         cha = GameObject.Find("Player").GetComponent<Char>();
-        matColor = mat.color;
+       // matColor = mat.color;
     }
     void Awake()
     {
@@ -66,7 +67,7 @@ public class block1 : MonoBehaviour
         //yr = transform.rotation.y;
         //zr = transform.rotation.z;
         get = cha.handBlock;
-        if (get)
+        if (cha.handBlock)
         {
             if (cha.getblock == this.transform.parent.gameObject)
             {
@@ -92,15 +93,12 @@ public class block1 : MonoBehaviour
         }
         if (!get)
         {
-            matColor.a = 1f;
-            this.mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, 1.0f); ;
+           // matColor.a = 1f;
+           // this.mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, 1.0f); ;
          
         }
     }
-    public void BlockRo()
-    {
-       
-    }
+  
    /* void SetUpFloor()//블록이 끼이는 버그 수정용 앞으로 지울 예정
     {
         firstRay = Physics.Raycast(transform.position, -transform.up, frayl, LayerMask.GetMask("Floor"));
