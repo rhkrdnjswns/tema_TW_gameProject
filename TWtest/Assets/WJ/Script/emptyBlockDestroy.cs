@@ -4,13 +4,30 @@ using UnityEngine;
 
 public class emptyBlockDestroy : MonoBehaviour
 {
- 
+    private Block block;
+
+    private int count = 0;
+    private void Awake()
+    {
+        block = GetComponent<Block>();
+    }
     // Update is called once per frame
     void Update()
     {
-        if(this.transform.childCount == 0)
+        CheckChildForReturn();
+    }
+    private void CheckChildForReturn()
+    {
+        for (int i = 0; i < transform.childCount; i++)
         {
-            Destroy(this.gameObject);
+            if (transform.GetChild(i).gameObject.activeSelf == false)
+            {
+                count++;
+            }
+        }
+        if (count == transform.childCount)
+        {
+            ObjectPool.ReturnObject(block);
         }
     }
 }

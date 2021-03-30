@@ -11,6 +11,7 @@ public class ObjectPool : MonoBehaviour
     private Queue<Block> poolingObjectQueue = new Queue<Block>();
     private Queue<Ghost> poolingGohstQueue = new Queue<Ghost>();
 
+   
     private void Awake()
     {
         Instance = this;

@@ -5,10 +5,15 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     private float[] rotateDegree = { 0, 90, 180, -90 };
-    
-    
+
+    [SerializeField] private Transform pivot;
+
     private Grid grid;
 
+    public Transform GetPivot()
+    {
+        return pivot;
+    }
     public float[] getRotateDegree()
     {
         return rotateDegree;
@@ -16,11 +21,6 @@ public class Block : MonoBehaviour
     private void Awake()
     {
         grid = FindObjectOfType<Grid>();
-        /*int RandRotationX = Random.Range(0, rotateDegree.Length);
-        int RandRotationY = Random.Range(0, rotateDegree.Length);
-        int RandRotationZ = Random.Range(0, rotateDegree.Length);
-        Quaternion RandRotation = Quaternion.Euler(rotateDegree[RandRotationX], rotateDegree[RandRotationY], rotateDegree[RandRotationZ]);
-        transform.rotation = RandRotation;*/
 
     }
     public void SetBlockRot(Transform transform)
@@ -32,45 +32,7 @@ public class Block : MonoBehaviour
         transform.rotation = RandRotation;
         transform.position = CheckBlockTransform(transform);
     }
-    private void OnEnable()
-    {
-        /*foreach (Transform children in transform)
-        {
-            int roundX = Mathf.RoundToInt(children.transform.position.x);
-            Debug.Log(roundX);
-            int roundZ = Mathf.RoundToInt(children.transform.position.z);
-            Debug.Log(roundZ);
-            if (roundX > Grid.stageX)
-            {
-                while(roundX <= Grid.stageX)
-                    transform.position += new Vector3(-1, 0, 0);
-
-                Debug.Log("X 줄임");
-            }
-            else if (roundX < 0)
-            {
-                while (roundX >= 0)
-                    transform.position += new Vector3(1, 0, 0);
-
-                Debug.Log("X 늘림");
-            }
-            else if (roundZ > Grid.stageZ)
-            {
-                while (roundZ <= Grid.stageZ)
-                    transform.position += new Vector3(0, 0, -1);   
-
-                Debug.Log("Z 줄임");
-            }
-            else if (roundZ < 0)
-            {
-                while (roundZ >= 0)
-                    transform.position += new Vector3(0, 0, 1);
-
-                Debug.Log("Z 늘림");
-            }
-           
-        }*/
-    }
+   
     public Vector3 CheckBlockTransform(Transform transform)
     {
         Debug.Log("호출");
@@ -83,11 +45,11 @@ public class Block : MonoBehaviour
             {
                 switch (roundX)
                 {
-                    case 3:
+                    case 6:
                         transform.position += new Vector3(-1, 0, 0);
                         Debug.Log("X 1 줄임");
                         break;
-                    case 4:
+                    case 7:
                         transform.position += new Vector3(-2, 0, 0);
                         Debug.Log("X 2 줄임");
                         break;
@@ -124,11 +86,11 @@ public class Block : MonoBehaviour
 
                 switch (roundZ)
                 {
-                    case 3:
+                    case 6:
                         transform.position += new Vector3(0, 0, -1);
                         Debug.Log("Z 1 줄임");
                         break;
-                    case 4:
+                    case 7:
                         transform.position += new Vector3(0, 0, -2);
                         Debug.Log("Z 2 줄임");
                         break;
