@@ -26,14 +26,8 @@ public class PlayerCtrl : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
 
     }
-
-    private void FixedUpdate()
+    private void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        Move(h, v);
-        Turn(h, v);
         if (isGrab == true && block != null)
         {
             DropBlock();
@@ -41,6 +35,15 @@ public class PlayerCtrl : MonoBehaviour
             RotateBlockY();
             RotateBlockZ();
         }
+    }
+    private void FixedUpdate()
+    {
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+
+        Move(h, v);
+        Turn(h, v);
+        
         
     }
     private void Move(float h, float v)
@@ -66,10 +69,11 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (other.gameObject.tag == "Block")
             {
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
                 other.gameObject.transform.position = grabPos.position;
                 other.gameObject.transform.parent = grabPos.gameObject.transform;
                 block = other.GetComponent<Block>();
-                blockPivot = block.GetPivot();
+                blockPivot = block.Pivot;
                 rotationX = blockPivot.rotation.x;
                 rotationY = blockPivot.rotation.y;
                 rotationZ = blockPivot.rotation.z;
@@ -125,6 +129,9 @@ public class PlayerCtrl : MonoBehaviour
 
                     block.transform.parent = null;
                     block.transform.position = new Vector3(ronndX, ronndY, ronndZ);
+                    block.transform.rotation = block.Pivot.rotation;
+                    block.Pivot.rotation = Quaternion.Euler(0, 0, 0);
+                    block.gameObject.GetComponent<BoxCollider>().enabled = true;
 
                     block = null;
                     isGrab = false;

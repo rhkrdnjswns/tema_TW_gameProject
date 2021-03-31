@@ -10,10 +10,9 @@ public class Block : MonoBehaviour
 
     private Grid grid;
 
-    public Transform GetPivot()
-    {
-        return pivot;
-    }
+    public Transform Pivot { get => pivot; set => pivot = value; }
+
+  
     public float[] getRotateDegree()
     {
         return rotateDegree;
@@ -45,11 +44,11 @@ public class Block : MonoBehaviour
             {
                 switch (roundX)
                 {
-                    case 6:
+                    case 2:
                         transform.position += new Vector3(-1, 0, 0);
                         Debug.Log("X 1 줄임");
                         break;
-                    case 7:
+                    case 3:
                         transform.position += new Vector3(-2, 0, 0);
                         Debug.Log("X 2 줄임");
                         break;
@@ -86,11 +85,11 @@ public class Block : MonoBehaviour
 
                 switch (roundZ)
                 {
-                    case 6:
+                    case 2:
                         transform.position += new Vector3(0, 0, -1);
                         Debug.Log("Z 1 줄임");
                         break;
-                    case 7:
+                    case 3:
                         transform.position += new Vector3(0, 0, -2);
                         Debug.Log("Z 2 줄임");
                         break;
