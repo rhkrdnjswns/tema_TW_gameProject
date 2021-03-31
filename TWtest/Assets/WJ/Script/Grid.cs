@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public static int stageX = 2;
-    public static int stageZ = 2;
+    public static int stageX = 6;
+    public static int stageZ = 6;
     public static int stageY = 14;
     public static Transform[,,] grid = new Transform[stageX, stageZ, stageY];
 
+    
 
     private void Update()
     {
@@ -34,6 +35,7 @@ public class Grid : MonoBehaviour
     }
     public void AddToGrid(Transform transform) //그리드에 추가
     {
+        Debug.Log("추가됨");
         foreach (Transform children in transform)
         {
             int roundX = Mathf.RoundToInt(children.transform.position.x);
@@ -72,7 +74,12 @@ public class Grid : MonoBehaviour
         {
             for (int x = 0; x < stageX; x++)
             {
-                grid[z, x, i].gameObject.SetActive(false);    
+                grid[z, x, i].gameObject.SetActive(false);
+                grid[z, x, i].gameObject.transform.parent.gameObject.GetComponent<Block>().Count--;
+                if (grid[z, x, i].gameObject.transform.parent.gameObject.GetComponent<Block>().Count == 0)
+                {
+                    ObjectPool.ReturnObject(grid[z, x, i].gameObject.transform.parent.gameObject.GetComponent<Block>());
+                }
                 grid[z, x, i] = null;
             }
         }

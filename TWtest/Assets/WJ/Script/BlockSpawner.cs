@@ -10,7 +10,7 @@ public class BlockSpawner : MonoBehaviour
     [SerializeField]
     private GameObject GhostBlock;
     private GameObject currentGhostBlock;
-
+    
    
 
     private Transform transform;
@@ -45,11 +45,15 @@ public class BlockSpawner : MonoBehaviour
         }
         
     }
+        
+ 
     public void createNewBlock(int level)
     {
         int RandomPosX = Random.Range(0, Grid.stageX);
         int RandomPosZ = Random.Range(0, Grid.stageZ);
+        
         int blockNum = Random.Range(0, 4);
+        transform.position = new Vector3(RandomPosX, transform.position.y, RandomPosZ);
         transform.position = new Vector3(RandomPosX, transform.position.y, RandomPosZ);
         if(level > 1)
             if (PreviousPos != Vector3.zero)

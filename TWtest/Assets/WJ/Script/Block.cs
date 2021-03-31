@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+    public Transform Pivot { get => pivot; set => pivot = value; }
+    public int Count { get => count; set => count = value; }
+
+    private int count;
+    
+
     private float[] rotateDegree = { 0, 90, 180, -90 };
 
     [SerializeField] private Transform pivot;
 
+
     private Grid grid;
 
-    public Transform Pivot { get => pivot; set => pivot = value; }
+    
 
   
     public float[] getRotateDegree()
@@ -20,6 +27,7 @@ public class Block : MonoBehaviour
     private void Awake()
     {
         grid = FindObjectOfType<Grid>();
+        count = transform.childCount;
 
     }
     public void SetBlockRot(Transform transform)
@@ -44,11 +52,11 @@ public class Block : MonoBehaviour
             {
                 switch (roundX)
                 {
-                    case 2:
+                    case 6:
                         transform.position += new Vector3(-1, 0, 0);
                         Debug.Log("X 1 줄임");
                         break;
-                    case 3:
+                    case 7:
                         transform.position += new Vector3(-2, 0, 0);
                         Debug.Log("X 2 줄임");
                         break;
@@ -85,11 +93,11 @@ public class Block : MonoBehaviour
 
                 switch (roundZ)
                 {
-                    case 2:
+                    case 6:
                         transform.position += new Vector3(0, 0, -1);
                         Debug.Log("Z 1 줄임");
                         break;
-                    case 3:
+                    case 7:
                         transform.position += new Vector3(0, 0, -2);
                         Debug.Log("Z 2 줄임");
                         break;
