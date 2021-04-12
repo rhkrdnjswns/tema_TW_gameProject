@@ -50,9 +50,8 @@ GameObject:
   - component: {fileID: 7499012021588139323}
   - component: {fileID: 7499012021588139322}
   - component: {fileID: 3382970797760247474}
-  - component: {fileID: 4766417442261856876}
   - component: {fileID: 2712827299078106979}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Block I
   m_TagString: Block
   m_Icon: {fileID: 0}
@@ -105,18 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivot: {fileID: 0}
---- !u!114 &4766417442261856876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7499012021588139269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c91c580f4e4a9da43acb2fe3eea7bae9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  grabMat: {fileID: 2100000, guid: 8b50bc284d14f9e41baa4ddf69e65b74, type: 2}
+  originMat: {fileID: -876546973899608171, guid: 94832df774efd4c48a0e401af550d0a1,
+    type: 3}
 --- !u!65 &2712827299078106979
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -221,6 +211,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 94832df774efd4c48a0e401af550d0a1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94832df774efd4c48a0e401af550d0a1, type: 3}
@@ -328,6 +323,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 94832df774efd4c48a0e401af550d0a1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94832df774efd4c48a0e401af550d0a1, type: 3}
 --- !u!1 &3766449100557880417 stripped
@@ -424,6 +424,12 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 94832df774efd4c48a0e401af550d0a1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 94832df774efd4c48a0e401af550d0a1,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 94832df774efd4c48a0e401af550d0a1,
         type: 3}
       propertyPath: m_Name
@@ -433,6 +439,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 94832df774efd4c48a0e401af550d0a1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94832df774efd4c48a0e401af550d0a1, type: 3}

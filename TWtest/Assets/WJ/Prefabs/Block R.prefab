@@ -50,7 +50,6 @@ GameObject:
   - component: {fileID: 8053615933323384078}
   - component: {fileID: 8053615933323384079}
   - component: {fileID: 5976025812013341257}
-  - component: {fileID: 8281955967405005950}
   m_Layer: 0
   m_Name: Block R
   m_TagString: Untagged
@@ -103,18 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cdb3783903dc2408e4eeebf9a1872e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8281955967405005950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8053615933323384112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c91c580f4e4a9da43acb2fe3eea7bae9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  pivot: {fileID: 0}
 --- !u!1001 &2878563692386643023
 PrefabInstance:
   m_ObjectHideFlags: 0

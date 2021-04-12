@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,10 @@ public class PlayerCtrl : MonoBehaviour
     [SerializeField] private float rotSpeed = 10f;
     [SerializeField] private Transform grabPos;
     [SerializeField] private Transform dropPos;
+    Vector3 forward;
+    Vector3 right;
 
+    private Vector3 moveDir;
     private Transform blockPivot;
     private float rotationX = 0f;
     private float rotationY = 0f;
@@ -24,6 +28,11 @@ public class PlayerCtrl : MonoBehaviour
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        forward = Camera.main.transform.forward;
+        forward.y = 0;
+        forward = Vector3.Normalize(forward);
+
+        right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
 
     }
     private void Update()
@@ -35,16 +44,27 @@ public class PlayerCtrl : MonoBehaviour
             RotateBlockY();
             RotateBlockZ();
         }
+        //if (Input)
+        
     }
+
+    
+
     private void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+       // float h = Input.GetAxisRaw("Horizontal");
+        //float v = Input.GetAxisRaw("Vertical");
 
-        Move(h, v);
-        Turn(h, v);
+       // moveDir = (Vector3.forward * v) + (Vector3.right * h);
+       // moveDir = moveDir.normalized * speed * Time.deltaTime;
+
+        //transform.Translate(moveDir, Space.Self);
         
-        
+
+        //Move(h, v);
+        //Turn(h, v);
+
+
     }
     private void Move(float h, float v)
     {
@@ -58,7 +78,7 @@ public class PlayerCtrl : MonoBehaviour
         if (h == 0 && v == 0)
             return;
 
-        Quaternion newRotation = Quaternion.LookRotation(movement);
+        Quaternion newRotation = Quaternion.LookRotation(moveDir);
 
         rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation, newRotation, rotSpeed * Time.deltaTime);
     }

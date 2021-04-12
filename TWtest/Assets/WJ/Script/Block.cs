@@ -8,13 +8,15 @@ public class Block : MonoBehaviour
     public int Count { get => count; set => count = value; }
 
     private int count;
-    
+
+    private bool isGrab = false;
 
     private float[] rotateDegree = { 0, 90, 180, -90 };
 
     [SerializeField] private Transform pivot;
 
-
+    [SerializeField] private Material grabMat;
+    [SerializeField] private Material originMat;
     private Grid grid;
 
     
@@ -139,7 +141,13 @@ public class Block : MonoBehaviour
             grid.CheckForLines();
             this.enabled = false;
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            isGrab = true;
+            ReduceBlockScaleAndColorAlpha(isGrab);
+        }
+            
     }
 
     public bool isValidMove()
@@ -163,6 +171,17 @@ public class Block : MonoBehaviour
         return true;
     }
     
+    private void ReduceBlockScaleAndColorAlpha(bool isGrab)
+    {
+        if (isGrab)
+        {
+            GetComponent<Transform>().localScale = new Vector3(0.7f, 0.7f, 0.7f);
+            foreach(Transform child in transform)
+            {
+                child.GetComponent<MeshRenderer>().material = grabMat;
+            }
+        }
+    }
 }
   
 
