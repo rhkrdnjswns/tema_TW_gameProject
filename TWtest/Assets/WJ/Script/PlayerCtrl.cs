@@ -20,6 +20,7 @@ public class PlayerCtrl : MonoBehaviour
     private Rigidbody rigidbody;
     private Vector3 movement;
     [SerializeField] private bool isGrab = false;
+    private int jumpcount = 2;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class PlayerCtrl : MonoBehaviour
             RotateBlockY();
             RotateBlockZ();
         }
+        Jump();
     }
     private void FixedUpdate()
     {
@@ -43,8 +45,8 @@ public class PlayerCtrl : MonoBehaviour
 
         Move(h, v);
         Turn(h, v);
-        
-        
+
+
     }
     private void Move(float h, float v)
     {
@@ -136,5 +138,24 @@ public class PlayerCtrl : MonoBehaviour
                     block = null;
                     isGrab = false;
             }
+    }
+
+    private void Jump()
+    {
+        if (jumpcount > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                rigidbody.AddForce(Vector3.up * 10, ForceMode.Impulse);
+                jumpcount--;
+            }
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")    //바닥 스테이지 블록 레이어를 Floor로 해둘것
+        {
+            jumpcount = 2;
+        }
     }
 }
