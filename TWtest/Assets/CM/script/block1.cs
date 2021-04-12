@@ -10,8 +10,8 @@ public class block1 : MonoBehaviour
     MeshRenderer mesh;
     Material mat;
     Color matColor;
-    Char cha;
-    public enum Blocktype { fb, sb, tb };
+    PlayerCtrl cha;
+    public enum Blocktype { fb, sb, tb, rb };
     public Blocktype blocktype;
     public int value;
     public bool up;//블록이 바닥에 닿았는지
@@ -34,12 +34,12 @@ public class block1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //this.transform.rotation = Quaternion.Euler(0, 0, 0);
         mydirec = this.gameObject;
         collider = GetComponent<BoxCollider>();
         mesh = GetComponent<MeshRenderer>();
         mat = mesh.material;
-        cha = GameObject.Find("Player").GetComponent<Char>();
+        cha = GameObject.Find("Player").GetComponent<PlayerCtrl>();
         matColor = mat.color;
     }
     void Awake()
@@ -73,18 +73,27 @@ public class block1 : MonoBehaviour
                 if (xt)
                 {
                     Debug.Log("1");
-                    xr += 90f;
+                    if (xr < 45)
+                        xr = 90f;
+                    else
+                        xr = 0f;
                     
                 }
                 if (yt)
                 {
-                    yr += 90f;
+                    if (yr < 45)
+                        yr = 90f;
+                    else
+                        yr = 0f;
                     Debug.Log("2");
                     
                 }
                 if (zt)
                 {
-                    zr += 90f;
+                    if (zr < 45)
+                        zr = 90f;
+                    else
+                        zr = 0f;
                     Debug.Log("3");
                 } 
                 this.transform.parent.rotation = Quaternion.Euler(xr, yr, zr);
