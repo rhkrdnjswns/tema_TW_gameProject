@@ -25,6 +25,7 @@ public class PlayerCtrl : MonoBehaviour
     private RaycastHit rayHitdown;
     private GameObject underB;
     PutPos putpos;
+    PutPos putpost;
     //Setinput bool변수
     private bool jump;
     private bool grap;
@@ -32,6 +33,7 @@ public class PlayerCtrl : MonoBehaviour
     private bool keep;
     //GetGrab 변수
     public GameObject grabObject;
+    //public Transform grabtrans;
     public bool handBlock = false;
     public GameObject ghostblock;
     block1 blockg;
@@ -45,6 +47,9 @@ public class PlayerCtrl : MonoBehaviour
     public int spotx;
     public int spoty;
     public int spotz;
+    public int spotxt;
+    public int spotyt;
+    public int spotzt;
     //SetKeepBlock 함수
     public GameObject keepBlock = null;
     public GameObject keepT = null;
@@ -60,9 +65,6 @@ public class PlayerCtrl : MonoBehaviour
         if (isGrab == true && block != null)
         {
             DropBlock();
-            /*RotateBlockX();
-            RotateBlockY();
-            RotateBlockZ();*/
         }
         SetInput();
         SetJump();
@@ -74,6 +76,7 @@ public class PlayerCtrl : MonoBehaviour
     private void Start()
     {
         putpos = GameObject.Find("GrabCollider").GetComponent<PutPos>();
+        putpost = GameObject.Find("GrabCollider2").GetComponent<PutPos>();
         blockg = GameObject.Find("realbox (1)").GetComponent<block1>();
     }
     void FixedUpdate()
@@ -205,12 +208,13 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (grabObject.tag == "Block")
             {
-                ghostblock.SetActive(true);
+                //grabtrans = grabObject.GetComponent<Transform>();
                 blockg = grabObject.transform.GetComponentInChildren<block1>();
                 handindex = blockg.value;
                 hasblocks[handindex] = true;
                 handBlock = true;
                 put = false;
+                ghostblock.SetActive(true);
                 getblock = blocks[handindex];
                 for (int i = 0; i < blocks.Length; i++)
                 {
@@ -229,9 +233,18 @@ public class PlayerCtrl : MonoBehaviour
         if (put && handBlock && jumpcount == 2)
         {
             blockg = blocks[handindex].transform.GetComponentInChildren<block1>();
+            if (handindex == 2 && blockg.xr == 90f && blockg.yr == 0 && blockg.zr == 0)
+            {
             GameObject instantblock = Instantiate(putblocks[handindex],
+            new Vector3(spotx, this.transform.position.y + 1f, spotz - 1f),
+            blocks[handindex].transform.rotation);
+            }
+            else
+            {
+                GameObject instantblock = Instantiate(putblocks[handindex],
             new Vector3(spotx, this.transform.position.y, spotz),
             blocks[handindex].transform.rotation);
+            }
             handBlock = false;
             put = false;
 
@@ -246,6 +259,10 @@ public class PlayerCtrl : MonoBehaviour
         spotx = (int)Mathf.Round(putpos.pos.x);
         spotz = (int)Mathf.Round(putpos.pos.z);
         spoty = (int)Mathf.Round(putpos.pos.y);
+
+        spotxt = (int)Mathf.Round(putpost.pos.x);
+        spotzt = (int)Mathf.Round(putpost.pos.z);
+        spotyt = (int)Mathf.Round(putpost.pos.y);
     }
     void SetKeepBlock()
     {
