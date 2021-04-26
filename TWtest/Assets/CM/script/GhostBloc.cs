@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class GhostBloc : MonoBehaviour
 {
-
+    block1 block1;
     PlayerCtrl playerctrl;
     Block block;
     PutPos putpos;
     BlockChildT blockchildt;
    public GameObject grabObject;
+    float xr;
+    float yr;
+    float zr;
     public int x=1;
     int childx;
     int childy;
@@ -33,10 +36,11 @@ public class GhostBloc : MonoBehaviour
     }
     void Update()
     {
-        grabObject = putpos.forwardObject;
+        
         Moving();
         PutBlock();
         Ghost();
+        Turn();
       //  CanPut();
     }
     void CanPut()
@@ -62,21 +66,25 @@ public class GhostBloc : MonoBehaviour
     }
     void Ghost()
     {
-        if (playerctrl.getblock != null)
+        if (playerctrl.grabObject != null)
         {
-            // block = grabObject.GetComponent<Block>();
-            for (int i = 0; i < playerctrl.getblock.transform.GetChild(0).transform.childCount; i++)
+            if (Input.GetMouseButtonDown(0)&&!playerctrl.handBlock)
             {
-                 //   child[i] = grabObject.transform.GetChild(i).gameObject;
-               childx = Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.GetChild(i).transform.position.x)- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.x);
-               childy = Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.GetChild(i).transform.position.y)- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.y);
-               childz = Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.GetChild(i).transform.position.z)- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.z);
-               
-                ghostblocks[i].SetActive(true);
-                ghostblocks[i].transform.position = playerctrl.getblock.transform.GetChild(0).transform.GetChild(i).transform.position;
-                Grid.grid[childx, childy, childz] = null;
-                handblock = true;
-                blockcount = i;
+                Debug.Log("a");
+                // block = grabObject.GetComponent<Block>();
+                for (int i = 0; i < playerctrl.grabObject.transform.childCount; i++)
+                {
+                    //   child[i] = grabObject.transform.GetChild(i).gameObject;
+                    childx = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.x)/*- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.x)*/;
+                    childy = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.y)/*- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.y)*/;
+                    childz = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.z)/*- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.z)*/;
+
+                    ghostblocks[i].SetActive(true);
+                    ghostblocks[i].transform.position = playerctrl.grabObject.transform.GetChild(i).transform.position;
+                    Grid.grid[childx, childy, childz] = null;
+                    handblock = true;
+                    blockcount = i;
+                }
             }
         }
     }
@@ -121,6 +129,38 @@ public class GhostBloc : MonoBehaviour
                
                 handblock = false;
             }
+        }
+    }
+    void Turn()
+    {
+        if (playerctrl.handBlock)
+        {
+            if (Input.GetButtonDown("Xturn"))
+            {
+                Debug.Log("b");
+                if (xr < 45)
+                    xr = 90f;
+                else
+                   xr = 0f;
+
+            }
+            if (Input.GetButtonDown("Yturn"))
+            {
+                if (yr < 45)
+                    yr = 90f;
+                else
+                    yr = 0f;
+              
+            }
+            if (Input.GetButtonDown("Zturn"))
+            {
+                if (zr < 45)
+                   zr = 90f;
+                else
+                   zr = 0f;
+              
+            }
+            this.transform.rotation = playerctrl.getblock.transform.rotation;
         }
     }
     /* void OnTriggerEnter(Collider other)

@@ -41,6 +41,7 @@ public class PlayerCtrl : MonoBehaviour
     public bool[] hasblocks;
     public GameObject[] blocks;
     public GameObject getblock;
+    public GameObject FdestroyObject;//사라질 블럭
     //SetPut 함수
     public GameObject[] putblocks;
     //SetCanPut 함수
@@ -223,7 +224,9 @@ public class PlayerCtrl : MonoBehaviour
                         blocks[i].SetActive(true);
                     }
                 }
-                Destroy(grabObject);
+               FdestroyObject=grabObject;//
+               grabObject.SetActive(false);//
+               // Destroy(grabObject);
             }
         }
         return handindex;
@@ -247,7 +250,7 @@ public class PlayerCtrl : MonoBehaviour
             }
             handBlock = false;
             put = false;
-
+            Destroy(FdestroyObject);//
             getblock = null;
             hasblocks[handindex] = false;
             blocks[handindex].SetActive(false);
