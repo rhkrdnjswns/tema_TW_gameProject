@@ -18,7 +18,7 @@ public class block1 : MonoBehaviour
     bool get = false;
     bool xt;
     bool yt;
-     bool zt;
+    bool zt;
     //bool firstRay;
    // bool secondRay;
     public float xr = 0f;
@@ -49,7 +49,6 @@ public class block1 : MonoBehaviour
     void Update()
     {
         SetFirst();
-       
         SetRotat();
     }
     void SetFirst()
@@ -98,7 +97,6 @@ public class block1 : MonoBehaviour
         {
             matColor.a = 1f;
             this.mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, 1.0f); ;
-         
         }
     }
     public void BlockRo()
