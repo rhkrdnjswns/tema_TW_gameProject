@@ -14,11 +14,15 @@ public class PutPos : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Block")
+        if (other.gameObject != null)
         {
-            if (other.gameObject != null)
+            if (other.tag == "Block")
             {
-                forwardObject = other.transform.parent.gameObject;
+                if (other.transform.parent.gameObject != null)
+                {
+                    forwardObject = other.transform.parent.gameObject;
+                }
+
             }
         }
     }

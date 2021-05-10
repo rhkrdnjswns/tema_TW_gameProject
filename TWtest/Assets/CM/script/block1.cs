@@ -15,7 +15,7 @@ public class block1 : MonoBehaviour
     public Blocktype blocktype;
     public int value;
     public bool up;//블록이 바닥에 닿았는지
-    bool get;
+    bool get = false;
     bool xt;
     bool yt;
      bool zt;
@@ -31,27 +31,26 @@ public class block1 : MonoBehaviour
     GameObject parents;
     Rigidbody rigid;
     Collider collider;
+    void Awake()
+    {
+        rigid = GetComponent<Rigidbody>();
+        cha = GameObject.Find("Player").GetComponent<PlayerCtrl>();
+        mesh = GetComponent<MeshRenderer>();
+        mat = mesh.material;
+    }
     // Start is called before the first frame update
     void Start()
     {
         //this.transform.rotation = Quaternion.Euler(0, 0, 0);
         mydirec = this.gameObject;
         collider = GetComponent<BoxCollider>();
-        mesh = GetComponent<MeshRenderer>();
-        mat = mesh.material;
-        cha = GameObject.Find("Player").GetComponent<PlayerCtrl>();
         matColor = mat.color;
-    }
-    void Awake()
-    {
-        rigid = GetComponent<Rigidbody>();
     }
     void Update()
     {
         SetFirst();
        
         SetRotat();
-       
     }
     void SetFirst()
     {
@@ -61,10 +60,6 @@ public class block1 : MonoBehaviour
     }
     void SetRotat()
     {
-        
-        //xr = transform.rotation.x;
-        //yr = transform.rotation.y;
-        //zr = transform.rotation.z;
         get = cha.handBlock;
         if (get)
         {
@@ -95,7 +90,7 @@ public class block1 : MonoBehaviour
                     else
                         zr = 0f;
                     Debug.Log("3");
-                } 
+                }
                 this.transform.parent.rotation = Quaternion.Euler(xr, yr, zr);
             }
         }
