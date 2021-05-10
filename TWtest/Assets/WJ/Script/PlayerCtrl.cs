@@ -35,7 +35,7 @@ public class PlayerCtrl : MonoBehaviour
     public GameObject grabObject;
     //public Transform grabtrans;
     public bool handBlock = false;
-    public GameObject ghostblock;
+    public GameObject[] ghostblock;
     block1 blockg;
     public int handindex;
     public bool[] hasblocks;
@@ -215,7 +215,7 @@ public class PlayerCtrl : MonoBehaviour
                 hasblocks[handindex] = true;
                 handBlock = true;
                 put = false;
-                ghostblock.SetActive(true);
+                ghostblock[handindex].SetActive(true);
                 getblock = blocks[handindex];
                 for (int i = 0; i < blocks.Length; i++)
                 {
@@ -239,7 +239,7 @@ public class PlayerCtrl : MonoBehaviour
             if (handindex == 2 && blockg.xr == 90f && blockg.yr == 0 && blockg.zr == 0)
             {
             GameObject instantblock = Instantiate(putblocks[handindex],
-            new Vector3(spotx, this.transform.position.y + 1f, spotz - 1f),
+            new Vector3(spotx + 1, this.transform.position.y + 0.5f, spotz),
             blocks[handindex].transform.rotation);
             }
             else
@@ -254,7 +254,7 @@ public class PlayerCtrl : MonoBehaviour
             getblock = null;
             hasblocks[handindex] = false;
             blocks[handindex].SetActive(false);
-            ghostblock.SetActive(false);
+            ghostblock[handindex].SetActive(false);
         }
     }
     void SetCanPut()
@@ -278,7 +278,7 @@ public class PlayerCtrl : MonoBehaviour
             hasblocks[handindex] = false;
             handindext = handindex;
             blocks[handindex].SetActive(false);
-            ghostblock.SetActive(false);
+            ghostblock[handindex].SetActive(false);
             keep = false;
         }
         if (keep && handBlock && keepBlock != null)
@@ -303,7 +303,7 @@ public class PlayerCtrl : MonoBehaviour
             getblock = blocks[handindex];
             hasblocks[handindex] = true;
             keepBlock.SetActive(true);
-            ghostblock.SetActive(true);
+            ghostblock[handindex].SetActive(true);
             keepBlock = null;
             keep = false;
         }
