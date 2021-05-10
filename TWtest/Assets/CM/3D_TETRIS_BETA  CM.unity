@@ -176,7 +176,7 @@ PrefabInstance:
     - target: {fileID: 6300055534889738741, guid: fb518915c5b7a0444a9558c0d21b85f6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6300055534889738741, guid: fb518915c5b7a0444a9558c0d21b85f6,
         type: 3}
@@ -711,10 +711,10 @@ Transform:
   - {fileID: 666016519}
   - {fileID: 2074079673}
   - {fileID: 1675141738}
+  - {fileID: 1330769709}
   - {fileID: 1609082303}
   - {fileID: 1812701199}
   - {fileID: 356667371}
-  - {fileID: 1330769709}
   - {fileID: 1999795770}
   m_Father: {fileID: 0}
   m_RootOrder: 17
@@ -884,7 +884,7 @@ PrefabInstance:
     - target: {fileID: 8552508141272705038, guid: 22991e6f5b069ee4aba96b60b14cf5f4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8552508141272705038, guid: 22991e6f5b069ee4aba96b60b14cf5f4,
         type: 3}
@@ -909,7 +909,7 @@ PrefabInstance:
     - target: {fileID: 8552508141272705038, guid: 22991e6f5b069ee4aba96b60b14cf5f4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8552508141272705038, guid: 22991e6f5b069ee4aba96b60b14cf5f4,
         type: 3}
@@ -936,7 +936,8 @@ PrefabInstance:
       propertyPath: GrabCollider
       value: 
       objectReference: {fileID: 666016518}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8552508141272705036, guid: 22991e6f5b069ee4aba96b60b14cf5f4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 22991e6f5b069ee4aba96b60b14cf5f4, type: 3}
 --- !u!1 &705507993
 GameObject:
@@ -1320,7 +1321,7 @@ PrefabInstance:
     - target: {fileID: 8053615933323384078, guid: 30f723aa8e7688644990d21c5a7e552c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 2.11
       objectReference: {fileID: 0}
     - target: {fileID: 8053615933323384078, guid: 30f723aa8e7688644990d21c5a7e552c,
         type: 3}
@@ -1428,7 +1429,7 @@ PrefabInstance:
     - target: {fileID: 3170516519443531951, guid: 9a75b96a19eed6b43b2c461d50ead1f4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.54
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3571785266554964948, guid: 9a75b96a19eed6b43b2c461d50ead1f4,
         type: 3}
@@ -1448,7 +1449,7 @@ PrefabInstance:
     - target: {fileID: 3571785266554964949, guid: 9a75b96a19eed6b43b2c461d50ead1f4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3571785266554964949, guid: 9a75b96a19eed6b43b2c461d50ead1f4,
         type: 3}
@@ -1478,7 +1479,7 @@ PrefabInstance:
     - target: {fileID: 3571785266554964949, guid: 9a75b96a19eed6b43b2c461d50ead1f4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3571785266554964949, guid: 9a75b96a19eed6b43b2c461d50ead1f4,
         type: 3}
@@ -1851,7 +1852,7 @@ PrefabInstance:
     - target: {fileID: 2412184618948399699, guid: faaa2d1c317b34e4494d80614bd4aa18,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2412184618948399699, guid: faaa2d1c317b34e4494d80614bd4aa18,
         type: 3}
@@ -2044,6 +2045,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1675141738}
+  - component: {fileID: 1675141739}
   m_Layer: 0
   m_Name: DropPos
   m_TagString: Untagged
@@ -2065,6 +2067,18 @@ Transform:
   m_Father: {fileID: 341856028}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1675141739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675141737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6c55385e964cc4580792c978918d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1812701198 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3571785266554964948, guid: 9a75b96a19eed6b43b2c461d50ead1f4,

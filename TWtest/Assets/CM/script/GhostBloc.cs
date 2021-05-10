@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GhostBloc : MonoBehaviour
 {
@@ -14,12 +15,14 @@ public class GhostBloc : MonoBehaviour
     float xr;
     float yr;
     float zr;
-    public int x=1;
+    bool ghostlive = true;
     int childx;
     int childy;
     int childz;
+    float downY;
+    int mz;
     int[,,] childspot;
-    int blockcount;
+    int blockcount;//블록수
     GameObject[] child;
     bool handblock = false;
     bool canput = false;
@@ -36,22 +39,22 @@ public class GhostBloc : MonoBehaviour
     }
     void Update()
     {
-        
         Moving();
         PutBlock();
-        Ghost();
+       Ghost();
         Turn();
+        NBlock();
       //  CanPut();
     }
     void CanPut()
     {
-        if (handblock)
+        if (playerctrl.handBlock)
         {
             for (int i = 0; i < blockcount; i++)
             {
-                childx = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.x- (int)this.transform.GetChild(0).transform.position.x;
-                childy = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.y- (int)this.transform.GetChild(0).transform.position.y;
-                childz = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.z- (int)this.transform.GetChild(0).transform.position.z;
+                childx = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.x;
+                childy = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.y;
+                childz = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.z;
                 if (Grid.grid[childx, childy, childz] == null)
                 {
                     canput = true;//블록 놓기 가능
@@ -66,68 +69,83 @@ public class GhostBloc : MonoBehaviour
     }
     void Ghost()
     {
-        if (playerctrl.grabObject != null)
-        {
-            if (Input.GetMouseButtonDown(0)&&!playerctrl.handBlock)
-            {
-                Debug.Log("a");
-                // block = grabObject.GetComponent<Block>();
-                for (int i = 0; i < playerctrl.grabObject.transform.childCount; i++)
+                if (playerctrl.getblock != null&&ghostlive)
                 {
-                    //   child[i] = grabObject.transform.GetChild(i).gameObject;
-                    childx = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.x)/*- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.x)*/;
-                    childy = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.y)/*- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.y)*/;
-                    childz = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.z)/*- Mathf.RoundToInt(playerctrl.getblock.transform.GetChild(0).transform.position.z)*/;
-
-                    ghostblocks[i].SetActive(true);
-                    ghostblocks[i].transform.position = playerctrl.grabObject.transform.GetChild(i).transform.position;
-                    Grid.grid[childx, childy, childz] = null;
-                    handblock = true;
-                    blockcount = i;
-                }
+                    //this.transform.GetChild(0).transform.rotation = playerctrl.grabObject.transform.rotation;
+                    // block = grabObject.GetComponent<Block>();
+                    for (int i = 0; i < playerctrl.grabObject.transform.childCount; i++)
+                    {
+                        //   child[i] = grabObject.transform.GetChild(i).gameObject;
+                        childx = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.x);
+                        childy = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.y);
+                        childz = Mathf.RoundToInt(playerctrl.grabObject.transform.GetChild(i).transform.position.z);
+                        ghostblocks[i].SetActive(true);
+                      ghostblocks[i].transform.position = new Vector3(childx, childy, childz);
+                    //Grid.grid[childx, childy, childz] = null;
+                        
+                        blockcount = i;
+                ghostlive = false;
+                
+               // this.transform.GetChild(0).position = playerctrl.grabObject.transform.position;
             }
+            Debug.Log(blockcount);
         }
     }
+
     void Moving()
     {
         this.transform.position = new Vector3((int)Mathf.Round(dropPos.position.x), (int)Mathf.Round(dropPos.position.y), (int)Mathf.Round(dropPos.position.z));
-        /*if (playerctrl.getblock)
-            for (int i = 0; i < blockcount; i++)
+        if (playerctrl.handBlock)
+        {
+            for(int i = 0; i <= blockcount; i++)
             {
-                if (ghostblocks[i].transform.position.y < 0)
+                if (this.transform.GetChild(0).transform.GetChild(i).transform.position.y < 0)
                 {
-                    downblock=true;
+                    upblock=true;
                 }
-                childx = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.x - (int)this.transform.GetChild(0).transform.position.x;
-                childy = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.y - (int)this.transform.GetChild(0).transform.position.y;
-                childz = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.z - (int)this.transform.GetChild(0).transform.position.z;
-                if (childy != 0)
-                {
-                    if (Grid.grid[childx, childy - 1, childz] == null)
-                    {
-                        ghostblocks[i].transform.position = new Vector3(ghostblocks[i].transform.position.x, ghostblocks[i].transform.position.y - 1, ghostblocks[i].transform.position.z);
-                    }
-                }
-            }*/
-      
+            }
+            if (upblock)
+            {
+                this.transform.GetChild(0).position = new Vector3(this.transform.position.x, this.transform.position.y + 1, this.transform.position.z);
+            }
+        }
     }
     void PutBlock()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (!playerctrl.handBlock&&!ghostlive)
         {
-           // Debug.Log(blockcount);
-            if (handblock)
+            if (Input.GetMouseButton(1))
             {
                 for (int i = 0; i <= blockcount; i++)
                 {
-                    childx = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.x;
-                    childy = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.y;
-                    childz = (int)this.transform.GetChild(0).transform.GetChild(i).transform.position.z;
+          
+                    childx = Mathf.RoundToInt(this.transform.GetChild(0).transform.GetChild(i).transform.position.x);
+                    childy = Mathf.RoundToInt(this.transform.GetChild(0).transform.GetChild(i).transform.position.y);
+                    childz = Mathf.RoundToInt(this.transform.GetChild(0).transform.GetChild(i).transform.position.z);
                     ghostblocks[i].SetActive(false);
-                    Grid.grid[childx, childy, childz] = this.transform.GetChild(0).transform.GetChild(i).transform;
+                    //  Grid.grid[childx, childy, childz] = this.transform.GetChild(0).transform.GetChild(i).transform;
                 }
                
-                handblock = false;
+                ghostlive = true;
+            }
+           
+        }
+    }
+    void NBlock()
+    {
+        if (playerctrl.getblock != null)
+        {
+            switch (playerctrl.getblock.name)
+            {
+                case "1":
+                    downY = -1.2f;
+                    break;
+                case "2":
+                    downY = -1f;
+                    break;
+                case "3":
+                    downY = -2f;
+                    break;
             }
         }
     }
@@ -135,34 +153,10 @@ public class GhostBloc : MonoBehaviour
     {
         if (playerctrl.handBlock)
         {
-            if (Input.GetButtonDown("Xturn"))
-            {
-                Debug.Log("b");
-                if (xr < 45)
-                    xr = 90f;
-                else
-                   xr = 0f;
-
-            }
-            if (Input.GetButtonDown("Yturn"))
-            {
-                if (yr < 45)
-                    yr = 90f;
-                else
-                    yr = 0f;
-              
-            }
-            if (Input.GetButtonDown("Zturn"))
-            {
-                if (zr < 45)
-                   zr = 90f;
-                else
-                   zr = 0f;
-              
-            }
-            this.transform.rotation = playerctrl.getblock.transform.rotation;
+            this.transform.GetChild(0).transform.rotation = playerctrl.getblock.transform.rotation;
         }
     }
+  
     /* void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Block")

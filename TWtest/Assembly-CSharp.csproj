@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\CM\script\BlockChildT.cs" />
     <Compile Include="Assets\CM\script\Char.cs" />
+    <Compile Include="Assets\CM\script\DropPosCM.cs" />
     <Compile Include="Assets\CM\script\Ghost1.cs" />
     <Compile Include="Assets\CM\script\GhostBloc.cs" />
     <Compile Include="Assets\CM\script\PutPos.cs" />
