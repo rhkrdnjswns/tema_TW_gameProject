@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PCTRLTest : MonoBehaviour
 {
-   
 
     [SerializeField] private float moveSpeed = 4f;
     private Vector3 forward;
     private Vector3 right;
+    [SerializeField] private BoxCollider jumpCollider; 
 
     private bool inputLeft = false;
     private bool inputRight = false;
@@ -18,6 +18,10 @@ public class PCTRLTest : MonoBehaviour
     private bool inputUpRight = false;
     private bool inputDownLeft = false;
     private bool inputDownRight = false;
+    private bool isJumpClick = false;
+    [SerializeField] private bool isJump = false;
+    private float pressTime = 0f;
+    private Rigidbody rigidbody;
 
     public bool InputLeft { get => inputLeft; set => inputLeft = value; }
     public bool InputRight { get => inputRight; set => inputRight = value; }
@@ -29,15 +33,14 @@ public class PCTRLTest : MonoBehaviour
     public bool InputDownRight { get => inputDownRight; set => inputDownRight = value; }
     public Vector3 Forward { get => forward; set => forward = value; }
     public Vector3 Right { get => right; set => right = value; }
+    public float PressTime { get => pressTime; set => pressTime = value; }
+    public bool IsJump { get => isJump; set => isJump = value; }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-
+        rigidbody = GetComponent<Rigidbody>();
+       
     }
-   
-    // Update is called once per frame
     void Update()
     {
    
@@ -72,6 +75,10 @@ public class PCTRLTest : MonoBehaviour
         else if(InputDownRight == true)
         {
             MoveDownRight();
+        }
+        if (isJumpClick)
+        {
+            pressTime += Time.deltaTime;
         }
     }
 
@@ -179,5 +186,36 @@ public class PCTRLTest : MonoBehaviour
             transform.position += FinalMovement;
         }
     }
-  
+    public void TryJump()
+    {
+        isJumpClick = true;
+    }
+    public void Jump()
+    {
+        if (!isJump)
+        {
+            isJump = true;
+            if (pressTime <= 1)
+            {
+                rigidbody.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+            }
+            else
+            {
+                Debug.Log("1초 넘음");
+                rigidbody.AddForce(Vector3.up * 6.5f, ForceMode.Impulse);
+            }
+
+            Invoke("SetJumpColliderForInvoke", 0.1f);
+            isJumpClick = false;
+            pressTime = 0f;
+        }
+        else
+        {
+            pressTime = 0f;
+        }
+    }
+    private void SetJumpColliderForInvoke()
+    {  
+        jumpCollider.enabled = true;
+    }
 }

@@ -9,6 +9,11 @@ TagManager:
   - Floor
   - Block
   - BlockSpawner
+  - BlockO
+  - BlockminiI
+  - BlockI
+  - BlockR
+  - floor
   layers:
   - Default
   - TransparentFX
@@ -20,9 +25,9 @@ TagManager:
   - 
   - Wall
   - Block
-  - 
-  - 
-  - 
+  - Ghost
+  - Floor
+  - Player
   - 
   - 
   - 

@@ -6,10 +6,20 @@ public class ButtonManager : MonoBehaviour
 {
     private PCTRLTest playerCtrl;
     private UtilsForCamera cam;
+    private PlayerInteraction playerInteraction;
+    private GrabCollider grabCollider;
+   
+    [SerializeField] private GameObject grabButton;
+    [SerializeField] private GameObject putButton;
+    [SerializeField] private GameObject keepButton;
+    [SerializeField] private GameObject keepOutButton;
     private void Awake()
     {
+        grabCollider = FindObjectOfType<GrabCollider>();
         playerCtrl = FindObjectOfType<PCTRLTest>();
-        cam = FindObjectOfType<UtilsForCamera>();    
+        cam = FindObjectOfType<UtilsForCamera>();
+        playerInteraction = FindObjectOfType<PlayerInteraction>();
+       
     }
 
     public void BtnEvt_Left()
@@ -50,5 +60,75 @@ public class ButtonManager : MonoBehaviour
             cam.ChangeCamera(cam.BackCam);
         else
             cam.ChangeCamera(cam.CenterCam);
+    }
+    public void BtnEvt_GrabBlock()
+    {
+        if (!playerCtrl.IsJump)
+        {
+            if (grabCollider.IsTriggerBlock)
+            {
+                playerInteraction.GrabBlock();
+                grabButton.SetActive(false);
+                putButton.SetActive(true);
+            }
+        }
+    }
+    public void BtnEvt_PutBlock()
+    {
+        if (!playerCtrl.IsJump)
+        {
+            if (playerInteraction.IsGrab)
+            {
+                playerInteraction.PutBlock();
+                if (playerInteraction.IsPut)
+                {
+                    putButton.SetActive(false);
+                    grabButton.SetActive(true);
+                    playerInteraction.IsPut = false;
+                }
+            }
+        }
+    }
+    public void BtnEvt_RotateX()
+    {
+        if (!playerCtrl.IsJump)
+            playerInteraction.RotateBlockX();
+    }
+    public void BtnEvt_RotateY()
+    {
+        if (!playerCtrl.IsJump)
+            playerInteraction.RotateBlockY();
+    }
+    public void BtnEvt_RotateZ()
+    {
+        if (!playerCtrl.IsJump)
+            playerInteraction.RotateBlockZ();
+    }
+    public void BtnEvt_Keep()
+    {
+        if (!playerCtrl.IsJump)
+        {
+            if (playerInteraction.KeepBlock())
+            {
+                putButton.SetActive(false);
+                grabButton.SetActive(true);
+                keepButton.SetActive(false);
+                keepOutButton.SetActive(true);
+            }
+        }
+    }
+    public void BtnEvt_KeepOut()
+    {
+        if (!playerCtrl.IsJump)
+        {
+            if (playerInteraction.KeepOut())
+            {
+                keepOutButton.SetActive(false);
+                keepButton.SetActive(true);
+                grabButton.SetActive(false);
+                putButton.SetActive(true);
+            }
+        }
+           
     }
 }

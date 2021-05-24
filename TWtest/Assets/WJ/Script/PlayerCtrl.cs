@@ -308,7 +308,7 @@ public class PlayerCtrl : MonoBehaviour
             keep = false;
         }
     }
-    void OnCollisionEnter(Collision collision)
+   /* void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Floor")
         {
@@ -325,5 +325,5 @@ public class PlayerCtrl : MonoBehaviour
                 Debug.Log("사망!");
             }
         }
-    }
+    }*/
 }

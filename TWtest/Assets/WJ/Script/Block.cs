@@ -17,6 +17,7 @@ public class Block : MonoBehaviour
 
     [SerializeField] private Material grabMat;
     [SerializeField] private Material originMat;
+
     private Grid grid;
 
     

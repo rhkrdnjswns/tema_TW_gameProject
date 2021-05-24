@@ -59,45 +59,49 @@ public class block1 : MonoBehaviour
     }
     void SetRotat()
     {
-        get = cha.handBlock;
-        if (get)
+        if (cha != null)
         {
-            if (cha.getblock == this.transform.parent.gameObject)
+            get = cha.handBlock;
+            if (get)
             {
-                if (xt)
+                if (cha.getblock == this.transform.parent.gameObject)
                 {
-                    Debug.Log("1");
-                    if (xr < 45)
-                        xr = 90f;
-                    else
-                        xr = 0f;
-                    
+                    if (xt)
+                    {
+                        Debug.Log("1");
+                        if (xr < 45)
+                            xr = 90f;
+                        else
+                            xr = 0f;
+
+                    }
+                    if (yt)
+                    {
+                        if (yr < 45)
+                            yr = 90f;
+                        else
+                            yr = 0f;
+                        Debug.Log("2");
+
+                    }
+                    if (zt)
+                    {
+                        if (zr < 45)
+                            zr = 90f;
+                        else
+                            zr = 0f;
+                        Debug.Log("3");
+                    }
+                    this.transform.parent.rotation = Quaternion.Euler(xr, yr, zr);
                 }
-                if (yt)
-                {
-                    if (yr < 45)
-                        yr = 90f;
-                    else
-                        yr = 0f;
-                    Debug.Log("2");
-                    
-                }
-                if (zt)
-                {
-                    if (zr < 45)
-                        zr = 90f;
-                    else
-                        zr = 0f;
-                    Debug.Log("3");
-                }
-                this.transform.parent.rotation = Quaternion.Euler(xr, yr, zr);
+            }
+            if (!get)
+            {
+                matColor.a = 1f;
+                this.mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, 1.0f); ;
             }
         }
-        if (!get)
-        {
-            matColor.a = 1f;
-            this.mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, 1.0f); ;
-        }
+        
     }
     public void BlockRo()
     {

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public static int stageX = 6;
-    public static int stageZ = 6;
+    public static int stageX = 2;
+    public static int stageZ = 2;
     public static int stageY = 14;
     public static Transform[,,] grid = new Transform[stageX, stageZ, stageY];
 
