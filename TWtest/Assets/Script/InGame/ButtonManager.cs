@@ -14,6 +14,11 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private GameObject putButton;
     [SerializeField] private GameObject keepButton;
     [SerializeField] private GameObject keepOutButton;
+
+    [SerializeField] private GameObject pauseWindow;
+
+    private bool isPause;
+
     private void Awake()
     {
         grabCollider = FindObjectOfType<GrabCollider>();
@@ -139,5 +144,20 @@ public class ButtonManager : MonoBehaviour
             }
         }
            
+    }
+    public void BtnEvt_Pause()
+    {
+        if (isPause == false)
+        {
+            Time.timeScale = 0;
+            pauseWindow.gameObject.SetActive(true);
+            isPause = true;
+        }
+        else if (isPause == true)
+        {
+            Time.timeScale = 1;
+            pauseWindow.gameObject.SetActive(false);
+            isPause = false;
+        }
     }
 }

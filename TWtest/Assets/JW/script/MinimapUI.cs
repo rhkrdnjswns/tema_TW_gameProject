@@ -6,7 +6,6 @@ public class MinimapUI : MonoBehaviour
 {
     GameObject minimap;
     GameObject minimapR;
-    GameObject minimapCamera;
 
     // Start is called before the first frame update
     void Start()
