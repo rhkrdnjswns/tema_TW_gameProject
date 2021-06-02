@@ -22,7 +22,7 @@ public class ButtonManager : MonoBehaviour
         playerInteraction = FindObjectOfType<PlayerInteraction>();
        
     }
-
+    #region ==BtnEvt==
     public void BtnEvt_Left()
     {
         playerCtrl.InputLeft = !playerCtrl.InputLeft;
@@ -140,4 +140,6 @@ public class ButtonManager : MonoBehaviour
         }
            
     }
+    #endregion
+
 }
