@@ -10,6 +10,14 @@ TagManager:
   - BlockI
   - BlockminiI
   - floor
+  - Pause
+  - BlockSpawner
+  - Floor
+  - Minimap
+  - Manager
+  - KeepManager
+  - Stage
+  - Score
   layers:
   - Default
   - TransparentFX
@@ -19,9 +27,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Minimap
+  - PlayerIcon
+  - Player
   - 
   - 
   - 

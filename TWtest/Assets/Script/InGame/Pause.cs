@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Pause : MonoBehaviour
 {
-    private GameObject pauseWindow;
+    [SerializeField] private GameObject pauseWindow;
     private bool isPause;       //일시정지 상황 판단 변수
 
     void Start()
     {
-        pauseWindow = GameObject.Find("Canvas").transform.Find("Pause").gameObject;
         isPause = false;
     }
 
