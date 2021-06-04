@@ -4,22 +4,16 @@ using UnityEngine;
 
 public class BlockSFX : MonoBehaviour
 {
-    [SerializeField] private AudioClip[] sounds;
-    private AudioSource audioSource;
-
-
-    void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "floor")
+        if (collision.gameObject.tag == "floor")
         {
-            int rand = Random.Range(0, 2);
-            audioSource.clip = sounds[rand];
-            audioSource.Play();
+            if(SoundManager.Instance != null)
+            {
+                int rand = Random.Range(2, 4);
+                SoundManager.Instance.PlaySound(false, rand);
+            }           
         }
     }
 }

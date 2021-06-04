@@ -11,6 +11,10 @@ public class ScoreManager : MonoBehaviour
     private int score = 0;
     private const int CLEAR_SCORE = 500;
     private const int SPAWN_SCORE = 25;
+    private int levelCount = 1;
+
+    [Header("레벨 상승에 필요한 점수")]
+    [SerializeField] private int levelUpScore = 5000;
 
     private BlockSpawner blockSpawner;
 
@@ -71,9 +75,11 @@ public class ScoreManager : MonoBehaviour
         }
         scoreText.text = score.ToString();
         SaveScore();
-        if (score >= 5000)
+        if (score >= levelUpScore)
         {
-            blockSpawner.Level = 2;
+            levelUpScore = levelUpScore * 3;
+            levelCount++;
+            blockSpawner.Level = levelCount;
         }
         //else if()
     }

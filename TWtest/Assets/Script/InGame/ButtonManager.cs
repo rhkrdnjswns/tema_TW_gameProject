@@ -14,7 +14,7 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private GameObject putButton;
     [SerializeField] private GameObject keepButton;
     [SerializeField] private GameObject keepOutButton;
-
+    [SerializeField] private GameObject warningMsg;
     [SerializeField] private GameObject pauseWindow;
 
     private bool isPause;
@@ -159,5 +159,15 @@ public class ButtonManager : MonoBehaviour
             pauseWindow.gameObject.SetActive(false);
             isPause = false;
         }
+    }
+
+    public void ActiveWarningMsg()
+    {
+        warningMsg.SetActive(true);
+        Invoke("ActiveFalseWarningMsgForInvoke", 3f);
+    }
+    private void ActiveFalseWarningMsgForInvoke()
+    {       
+        warningMsg.SetActive(false);
     }
 }

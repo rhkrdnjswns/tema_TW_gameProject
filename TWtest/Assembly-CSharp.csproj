@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Image\SpaceSkies Free\Demo\Scripts\LookCamera.cs" />
     <Compile Include="Assets\Image\SpaceSkies Free\Demo\Scripts\SkyboxChanger.cs" />
+    <Compile Include="Assets\JW\script\MinimapUI.cs" />
     <Compile Include="Assets\MainTitle\Main.cs" />
     <Compile Include="Assets\MainTitle\MainButtonManager.cs" />
     <Compile Include="Assets\MainTitle\SettingWindow.cs" />

@@ -12,8 +12,8 @@ public class BlockSpawner : MonoBehaviour
     private GameObject currentGhostBlock;
 
     private int level = 1;
-    
-    private float waitTime = 8f;
+    private float[] waitTimes = { 10f, 18f, 24f };
+    private float waitTime = 10f;
 
     private Transform transform;
     private Vector3 PreviousPos = Vector3.zero;
@@ -110,12 +110,11 @@ public class BlockSpawner : MonoBehaviour
                 currentGhostBlock = ObjectPool.GetGhost(blockNum).gameObject;
                 currentGhostBlock.transform.position = currentBlock.transform.position;
                 currentGhostBlock.transform.rotation = currentBlock.transform.rotation;
-                currentGhostBlock.GetComponent<Ghost>().setCurrnetBlockForGhost(currentBlock);
-                ScoreManager.Instance.ScoreUp(false);
+                currentGhostBlock.GetComponent<Ghost>().setCurrnetBlockForGhost(currentBlock);                
 
                 PreviousPos = transform.position;
             }          
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForSeconds(waitTimes[level-1]);
         }
         
 
