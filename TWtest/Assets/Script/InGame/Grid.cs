@@ -44,6 +44,7 @@ public class Grid : MonoBehaviour
 
             grid[roundX, roundZ, roundY] = children;
         }
+        ScoreManager.Instance.ScoreUp(false);
     }
     public void CheckForLines() // 층 검사
     {

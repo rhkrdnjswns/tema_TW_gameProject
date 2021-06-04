@@ -12,7 +12,7 @@ public class MinimapUI : MonoBehaviour
     {
         minimap = GameObject.FindWithTag("Minimap");
         minimapR = GameObject.Find("Canvas").transform.Find("MinimapR").gameObject;
-        minimapCamera = GameObject.Find("MinimapCamera");
+        //minimapCamera = GameObject.Find("MinimapCamera");
     }
 
     // Update is called once per frame

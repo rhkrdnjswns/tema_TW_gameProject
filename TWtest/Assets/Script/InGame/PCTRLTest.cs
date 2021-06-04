@@ -8,8 +8,9 @@ public class PCTRLTest : MonoBehaviour
     [SerializeField] private float moveSpeed = 4f;
     private Vector3 forward;
     private Vector3 right;
-    [SerializeField] private BoxCollider jumpCollider; 
+    [SerializeField] private BoxCollider jumpCollider;
 
+    #region ==Input Action==
     private bool inputLeft = false;
     private bool inputRight = false;
     private bool inputUp = false;
@@ -19,6 +20,8 @@ public class PCTRLTest : MonoBehaviour
     private bool inputDownLeft = false;
     private bool inputDownRight = false;
     private bool isJumpClick = false;
+    #endregion
+
     [SerializeField] private bool isJump = false;
     private float pressTime = 0f;
     [SerializeField] private Rigidbody rigidbody;

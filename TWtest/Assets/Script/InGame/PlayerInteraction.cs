@@ -20,7 +20,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Transform keepParent;
 
     private GhostUtility ghostUtility;
-
+    private ButtonManager btManager;
     private List<Vector3> ghostLocalPos = new List<Vector3>();
 
     private bool isPutPossiable = false;
@@ -34,7 +34,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        
+        btManager = FindObjectOfType<ButtonManager>();
         ghostUtility = GetComponentInChildren<GhostUtility>();
 
     }
@@ -197,6 +197,10 @@ public class PlayerInteraction : MonoBehaviour
                 }
                 isPut = true;
                 isGrab = false;
+            }
+            else
+            {
+                btManager.ActiveWarningMsg();
             }
         }
         
