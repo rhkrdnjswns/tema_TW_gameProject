@@ -71,6 +71,7 @@
     <Compile Include="Assets\MainTitle\SettingWindow.cs" />
     <Compile Include="Assets\MainTitle\dtween_test.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
+    <Compile Include="Assets\Script\HelpManager.cs" />
     <Compile Include="Assets\Script\InGame\Block.cs" />
     <Compile Include="Assets\Script\InGame\BlockSFX.cs" />
     <Compile Include="Assets\Script\InGame\BlockSpawner.cs" />
@@ -86,9 +87,11 @@
     <Compile Include="Assets\Script\InGame\PCTRLTest.cs" />
     <Compile Include="Assets\Script\InGame\Particle.cs" />
     <Compile Include="Assets\Script\InGame\Pause.cs" />
+    <Compile Include="Assets\Script\InGame\PlayerDie.cs" />
     <Compile Include="Assets\Script\InGame\PlayerInteraction.cs" />
     <Compile Include="Assets\Script\InGame\ScoreManager.cs" />
     <Compile Include="Assets\Script\InGame\UtilsForCamera.cs" />
+    <Compile Include="Assets\Script\Loading.cs" />
     <Compile Include="Assets\Script\SoundManager.cs" />
     <None Include="Assets\CasualGameBGM05\ReadMe.txt" />
     <Reference Include="UnityEngine">

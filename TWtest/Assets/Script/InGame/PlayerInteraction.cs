@@ -35,7 +35,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Awake()
     {
         btManager = FindObjectOfType<ButtonManager>();
-        ghostUtility = GetComponentInChildren<GhostUtility>();
+        ghostUtility = GetComponentInChildren<GhostUtility>();     
 
     }
  
@@ -185,6 +185,7 @@ public class PlayerInteraction : MonoBehaviour
                         obj.transform.parent = objParent.transform;
                         obj.transform.localScale = new Vector3(47.5f, 47.5f, 47.5f);
                         obj.tag = "Block";
+                        obj.GetComponent<MeshRenderer>().material = currentBlock.transform.GetChild(i).GetComponent<MeshRenderer>().material;
                     }
                 }
                 objParent.GetComponent<Block>().enabled = true;

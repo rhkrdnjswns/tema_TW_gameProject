@@ -7,6 +7,8 @@ public class MainButtonManager : MonoBehaviour
 {
     private GameObject settingwindow;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,5 +41,17 @@ public class MainButtonManager : MonoBehaviour
         Debug.Log("메인으로 돌아가기");
         Time.timeScale = 1;
         settingwindow.gameObject.SetActive(false);
+    }
+    public void Help()
+    {
+        GameManager.Instance.LoadHelpScene();
+    }
+    public void StartGame()
+    {
+        GameManager.Instance.LoadScene();
+    }
+    public void Exit()
+    {
+        GameManager.Instance.ExitGame();
     }
 }

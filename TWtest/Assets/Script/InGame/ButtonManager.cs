@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -8,8 +9,8 @@ public class ButtonManager : MonoBehaviour
     private UtilsForCamera cam;
     private PlayerInteraction playerInteraction;
     private GrabCollider grabCollider;
-  
-        
+    
+    [SerializeField] private GameObject gameOver;    
     [SerializeField] private GameObject grabButton;
     [SerializeField] private GameObject putButton;
     [SerializeField] private GameObject keepButton;
@@ -160,7 +161,22 @@ public class ButtonManager : MonoBehaviour
             isPause = false;
         }
     }
-
+    public void BtnEvt_ReStart()
+    {
+        Time.timeScale = 1f;
+        GameManager.Instance.LoadGameScene();
+    }
+    public void BtnEvt_Exit()
+    {
+        Time.timeScale = 1f;
+        GameManager.Instance.LoadMainScene();
+    }
+    public void GameOver()
+    {
+        SoundManager.Instance.StopSound();
+        gameOver.SetActive(true);
+        Time.timeScale = 0f;
+    }
     public void ActiveWarningMsg()
     {
         warningMsg.SetActive(true);
@@ -170,4 +186,5 @@ public class ButtonManager : MonoBehaviour
     {       
         warningMsg.SetActive(false);
     }
+    
 }

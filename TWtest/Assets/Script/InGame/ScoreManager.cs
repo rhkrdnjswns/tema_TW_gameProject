@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
 
     private int[] scoreUp = { 0, 1, 4, 16 };
     private int score = 0;
+    private int bestScore;
     private const int CLEAR_SCORE = 500;
     private const int SPAWN_SCORE = 25;
     private int levelCount = 1;
@@ -19,6 +20,7 @@ public class ScoreManager : MonoBehaviour
     private BlockSpawner blockSpawner;
 
     [SerializeField] private Text scoreText;
+    [SerializeField] private Text bestScoreText;
 
     public static ScoreManager Instance //인스턴스 게터
     {
@@ -74,7 +76,11 @@ public class ScoreManager : MonoBehaviour
             }
         }
         scoreText.text = score.ToString();
-        SaveScore();
+        if(PlayerPrefs.GetInt("Score") < score)
+        {
+            SaveScore();
+            bestScoreText.text = score.ToString();
+        }
         if (score >= levelUpScore)
         {
             levelUpScore = levelUpScore * 3;
@@ -90,13 +96,13 @@ public class ScoreManager : MonoBehaviour
     }
     public void LoadScore()
     {
-        score = PlayerPrefs.GetInt("Score", 0);
-        scoreText.text = score.ToString();
+        bestScore = PlayerPrefs.GetInt("Score", 0);
+        bestScoreText.text = bestScore.ToString();
     }
     public void ResetScore()
     {
         PlayerPrefs.DeleteKey("Score");
-        score = 0;
-        scoreText.text = score.ToString();
+        bestScore = 0;
+        bestScoreText.text = bestScore.ToString();
     }
 }

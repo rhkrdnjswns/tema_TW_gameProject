@@ -86,6 +86,7 @@ public class BlockSpawner : MonoBehaviour
     }*/
     public IEnumerator createNewBlock()
     {
+        yield return new WaitForSeconds(5f);
         while (true)
         {
             int RandomPosX = Random.Range(0, Grid.stageX);

@@ -39,6 +39,10 @@ public class SoundManager : MonoBehaviour
             effect.Play();
         }
     }
+    public void StopSound()//BGM 끄기, 씬 전환으로 BGM이 바뀌는 경우 끈 후에 오디오클립 바꿔주고 다시 틀어주기,,
+    {
+         bgm.Stop();
+    }
     public void VolumeSetting(bool isBGM, float value)
     {
         if (isBGM)
