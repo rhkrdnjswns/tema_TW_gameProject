@@ -4,10 +4,20 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Stage
-  - Spawner
-  - Floor
+  - BlockO
   - Block
+  - BlockR
+  - BlockI
+  - BlockminiI
+  - floor
+  - Pause
+  - BlockSpawner
+  - Floor
+  - Minimap
+  - Manager
+  - KeepManager
+  - Stage
+  - Score
   layers:
   - Default
   - TransparentFX
@@ -17,9 +27,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Minimap
+  - PlayerIcon
+  - Player
   - 
   - 
   - 
